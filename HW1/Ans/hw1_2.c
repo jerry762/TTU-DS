@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 typedef struct Node Node;
 typedef struct List List;
@@ -23,28 +24,32 @@ int main(void)
 
     list.headNode = NULL;
 
-    while (cmd != 'E' && cmd != 'e')
+    while (tolower(cmd) != 'e')
     {
         printf("Input or delete: ");
 
         scanf("%c", &cmd);
 
-        if (cmd == 'I' || cmd == 'i')
+        switch (tolower(cmd))
         {
-            Node *newNode = (Node *)calloc(1, sizeof(Node));
-
+        case 'i':
             printf("Input number: ");
             scanf("%d", &num);
-            getchar();
-
-            newNode->value = num;
 
             if (list.headNode == NULL)
+            {
+                Node *newNode = (Node *)calloc(1, sizeof(Node));
+                newNode->value = num;
+
                 list.headNode = newNode;
+            }
             else
             {
+                Node *newNode = (Node *)calloc(1, sizeof(Node));
                 Node *currNode = list.headNode;
                 Node *prevNode = NULL;
+
+                newNode->value = num;
 
                 while (currNode)
                 {
@@ -64,9 +69,8 @@ int main(void)
                 if (!currNode)
                     prevNode->nextNode = newNode;
             }
-        }
-        else if (cmd == 'D' || cmd == 'd')
-        {
+            break;
+        case 'd':
             if (list.headNode)
             {
                 Node *currNode = list.headNode;
@@ -74,7 +78,6 @@ int main(void)
 
                 printf("Delete number: ");
                 scanf("%d", &num);
-                getchar();
 
                 while (currNode)
                 {
@@ -100,6 +103,11 @@ int main(void)
                     currNode = currNode->nextNode;
                 }
             }
+            break;
+        default:
+            printf("invalid input !\n\n");
+            getchar();
+            continue;
         }
 
         if (list.headNode)
@@ -115,6 +123,7 @@ int main(void)
         else
             printf("empty !");
 
+        getchar();
         printf("\n\n");
     }
 

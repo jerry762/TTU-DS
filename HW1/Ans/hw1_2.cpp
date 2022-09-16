@@ -145,17 +145,25 @@ int main()
         cout << "Input or delete: ";
         cin >> cmd;
 
-        if (tolower(cmd) == 'i')
+        switch (tolower(cmd))
         {
+        case 'i':
             cout << "Input number: ";
             cin >> num;
             list.insert(num);
-        }
-        else if (tolower(cmd) == 'd')
-        {
-            cout << "Delete number: ";
-            cin >> num;
-            list.remove(num);
+            break;
+        case 'd':
+            if (!list.empty())
+            {
+                cout << "Delete number: ";
+                cin >> num;
+                list.remove(num);
+            }
+            break;
+        default:
+            cout << "invalid input !\n"
+                 << endl;
+            continue;
         }
 
         if (!list.empty())
