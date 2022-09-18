@@ -33,23 +33,20 @@ int main(void)
         switch (tolower(cmd))
         {
         case 'i':
+        {
+            Node *newNode = (Node *)calloc(1, sizeof(Node));
+
             printf("Input number: ");
             scanf("%d", &num);
 
-            if (list.headNode == NULL)
-            {
-                Node *newNode = (Node *)calloc(1, sizeof(Node));
-                newNode->value = num;
+            newNode->value = num;
 
+            if (list.headNode == NULL)
                 list.headNode = newNode;
-            }
             else
             {
-                Node *newNode = (Node *)calloc(1, sizeof(Node));
                 Node *currNode = list.headNode;
                 Node *prevNode = NULL;
-
-                newNode->value = num;
 
                 while (currNode)
                 {
@@ -69,7 +66,8 @@ int main(void)
                 if (!currNode)
                     prevNode->nextNode = newNode;
             }
-            break;
+        }
+        break;
         case 'd':
             if (list.headNode)
             {
