@@ -106,8 +106,7 @@ string removeI(string s) //* add your code here
 
 		str += s.substr(i, 1);
 
-		if (repeatCount != 0)
-			i += repeatCount;
+		i += repeatCount;
 	}
 
 	return str;
@@ -125,20 +124,34 @@ string removeR(string s) //* add your code here
 
 int TI(int m, int n) //* add your code here
 {
-	int value;
+	int value = 0;
 
-	for (int i = 0; i < n; i++)
-		value += m;
+	for (int i = 0; i < abs(n); i++)
+		value += abs(m);
+
+	if ((m < 0 || n < 0) && !(m < 0 && n < 0))
+		value *= -1;
 
 	return value;
 }
 
 int TR(int m, int n) //* add your code here
 {
+	if (n == 0 || m == 0)
+		return 0;
+
 	if (n == 1)
 		return m;
 
-	return TR(m, n - 1) + m;
+	if (m * n < 0)
+	{
+		if (n < 0)
+			swap(m, n);
+
+		return TR(m, n - 1) + m;
+	}
+	else
+		return TR(abs(m), abs(n) - 1) + abs(m);
 }
 
 int main()
