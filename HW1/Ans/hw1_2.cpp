@@ -153,12 +153,9 @@ int main()
             list.insert(num);
             break;
         case 'd':
-            if (!list.empty())
-            {
-                cout << "Delete number: ";
-                cin >> num;
-                list.remove(num);
-            }
+            cout << "Delete number: ";
+            cin >> num;
+            list.remove(num);
             break;
         default:
             cout << "invalid input !\n"

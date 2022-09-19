@@ -69,39 +69,38 @@ int main(void)
         }
         break;
         case 'd':
-            if (list.headNode)
+        {
+            Node *currNode = list.headNode;
+            Node *prevNode = NULL;
+
+            printf("Delete number: ");
+            scanf("%d", &num);
+
+            while (currNode)
             {
-                Node *currNode = list.headNode;
-                Node *prevNode = NULL;
-
-                printf("Delete number: ");
-                scanf("%d", &num);
-
-                while (currNode)
+                if (currNode->value == num)
                 {
-                    if (currNode->value == num)
+                    Node *delNode = NULL;
+
+                    while (currNode && currNode->value == num)
                     {
-                        Node *delNode = NULL;
-
-                        while (currNode && currNode->value == num)
-                        {
-                            delNode = currNode;
-                            currNode = currNode->nextNode;
-                            free(delNode);
-                        }
-
-                        if (prevNode)
-                            prevNode->nextNode = currNode;
-                        else
-                            list.headNode = currNode;
-
-                        break;
+                        delNode = currNode;
+                        currNode = currNode->nextNode;
+                        free(delNode);
                     }
-                    prevNode = currNode;
-                    currNode = currNode->nextNode;
+
+                    if (prevNode)
+                        prevNode->nextNode = currNode;
+                    else
+                        list.headNode = currNode;
+
+                    break;
                 }
+                prevNode = currNode;
+                currNode = currNode->nextNode;
             }
-            break;
+        }
+        break;
         default:
             printf("invalid input !\n\n");
             getchar();
