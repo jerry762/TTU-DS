@@ -2,6 +2,7 @@
 //
 
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -32,20 +33,110 @@ public:
 
 	void inputTerms(int coef, int expo) //* add your code here
 	{
+		if (coef == 0)
+			return;
 
-		return;
+		int size = 0;
+
+		for (int i = 0; i < MAX_TERMS; i++)
+		{
+			if (terms[i].coef != 0)
+			{
+				size++;
+			}
+		}
+
+		terms[size].expo = expo;
+		terms[size].coef = coef;
+
+		if (size == 0)
+			return;
+
+		for (int i = 0; i < size; i++)
+		{
+			if (expo > terms[i].expo)
+			{
+				for (int j = 0; j < size - i; j++)
+					terms[size - j] = terms[size - 1 - j];
+
+				terms[i].expo = expo;
+				terms[i].coef = coef;
+
+				break;
+			}
+			else if (expo == terms[i].expo)
+			{
+				terms[i].coef = coef;
+				terms[size].expo = 0;
+				terms[size].coef = 0;
+				break;
+			}
+		}
 	}
 
 	void addArrayBasedPoly(ArrayPolynomial &a, ArrayPolynomial &b) //* add your code here
 	{
+		int pointA = 0;
+		int pointB = 0;
+		int pointD = 0;
 
-		return;
+		while (a.terms[pointA].coef != 0 && b.terms[pointB].coef != 0)
+		{
+			if (a.terms[pointA].expo > b.terms[pointB].expo)
+			{
+				terms[pointD].expo = a.terms[pointA].expo;
+				terms[pointD].coef = a.terms[pointA].coef;
+				pointA++;
+				pointD++;
+			}
+			else if (a.terms[pointA].expo < b.terms[pointB].expo)
+			{
+				terms[pointD].expo = b.terms[pointB].expo;
+				terms[pointD].coef = b.terms[pointB].coef;
+				pointB++;
+				pointD++;
+			}
+			else
+			{
+				terms[pointD].expo = a.terms[pointA].expo;
+				terms[pointD].coef = a.terms[pointA].coef + b.terms[pointB].coef;
+				pointA++;
+				pointB++;
+				pointD++;
+			}
+		}
+
+		while (a.terms[pointA].coef != 0)
+		{
+			terms[pointD].expo = a.terms[pointA].expo;
+			terms[pointD].coef = a.terms[pointA].coef;
+			pointD++;
+			pointA++;
+		}
+
+		while (b.terms[pointB].coef != 0)
+		{
+			terms[pointD].expo = b.terms[pointB].expo;
+			terms[pointD].coef = b.terms[pointB].coef;
+			pointB++;
+			pointD++;
+		}
 	}
 
 	void reverseArrayBasedPoly() //* add your code here
 	{
+		int size = 0;
 
-		return;
+		for (int i = 0; i < MAX_TERMS; i++)
+		{
+			if (terms[i].coef != 0)
+			{
+				size++;
+			}
+		}
+
+		for (int i = 0; i < size / 2; i++)
+			swap(terms[i], terms[size - 1 - i]);
 	}
 
 	void printArrayBasedPoly()
@@ -74,8 +165,21 @@ public:
 
 	int compute(int x) //* add your code here
 	{
+		int sum = 0;
+		int size = 0;
 
-		return 0;
+		for (int i = 0; i < MAX_TERMS; i++)
+		{
+			if (terms[i].coef != 0)
+			{
+				size++;
+			}
+		}
+
+		for (int i = 0; i < size; i++)
+			sum += terms[i].coef * pow(x, terms[i].expo);
+
+		return sum;
 	}
 };
 
@@ -108,27 +212,154 @@ public:
 
 	void inputLinkTerms(int coef, int expo) //* add your code here
 	{
-		LinkedPolynomialTerm *tmpPtr;
+		if (coef == 0)
+			return;
 
-		tmpPtr = new LinkedPolynomialTerm;
-		tmpPtr->coef = coef;
-		tmpPtr->expo = expo;
+		LinkedPolynomialTerm *newNode = new LinkedPolynomialTerm;
 
-		// add your code here
+		newNode->expo = expo;
+		newNode->coef = coef;
+		newNode->nextTermPtr = nullptr;
 
-		return;
+		if (!polynomialTermPtr)
+			polynomialTermPtr = newNode;
+		else
+		{
+			LinkedPolynomialTerm *currNode = polynomialTermPtr;
+			LinkedPolynomialTerm *prevNode = nullptr;
+
+			while (currNode)
+			{
+				if (expo > currNode->expo)
+				{
+					if (currNode == polynomialTermPtr)
+						polynomialTermPtr = newNode;
+					else
+						prevNode->nextTermPtr = newNode;
+
+					newNode->nextTermPtr = currNode;
+					break;
+				}
+				else if (expo == currNode->expo)
+				{
+					currNode->coef = coef;
+					delete newNode;
+					break;
+				}
+				prevNode = currNode;
+				currNode = currNode->nextTermPtr;
+			}
+			if (!currNode)
+				prevNode->nextTermPtr = newNode;
+		}
 	}
 
 	void addLinkBasedPoly(LinkPolynomial &aPol, LinkPolynomial &bPol) //* add your code here
 	{
+		LinkedPolynomialTerm *pointA = aPol.polynomialTermPtr;
+		LinkedPolynomialTerm *pointB = bPol.polynomialTermPtr;
+		LinkedPolynomialTerm *pointD = polynomialTermPtr;
 
-		return;
+		while (pointA && pointB)
+		{
+			LinkedPolynomialTerm *newNode = new LinkedPolynomialTerm;
+
+			newNode->nextTermPtr = nullptr;
+
+			if (pointA->expo > pointB->expo)
+			{
+				newNode->expo = pointA->expo;
+				newNode->coef = pointA->coef;
+				pointA = pointA->nextTermPtr;
+			}
+			else if (pointA->expo < pointB->expo)
+			{
+				newNode->expo = pointB->expo;
+				newNode->coef = pointB->coef;
+				pointB = pointB->nextTermPtr;
+			}
+			else
+			{
+				newNode->expo = pointA->expo;
+				newNode->coef = pointA->coef + pointB->coef;
+				pointA = pointA->nextTermPtr;
+				pointB = pointB->nextTermPtr;
+			}
+
+			if (!polynomialTermPtr)
+			{
+				polynomialTermPtr = newNode;
+				pointD = polynomialTermPtr;
+			}
+			else
+			{
+				pointD->nextTermPtr = newNode;
+				pointD = pointD->nextTermPtr;
+			}
+		}
+
+		while (pointA)
+		{
+			LinkedPolynomialTerm *newNode = new LinkedPolynomialTerm;
+
+			newNode->expo = pointA->expo;
+			newNode->coef = pointA->coef;
+			newNode->nextTermPtr = nullptr;
+
+			if (!polynomialTermPtr)
+			{
+				polynomialTermPtr = newNode;
+				pointD = polynomialTermPtr;
+			}
+			else
+			{
+				pointD->nextTermPtr = newNode;
+				pointD = pointD->nextTermPtr;
+			}
+			pointA = pointA->nextTermPtr;
+		}
+
+		while (pointB)
+		{
+			LinkedPolynomialTerm *newNode = new LinkedPolynomialTerm;
+
+			newNode->expo = pointB->expo;
+			newNode->coef = pointB->coef;
+			newNode->nextTermPtr = nullptr;
+
+			if (!polynomialTermPtr)
+			{
+				polynomialTermPtr = newNode;
+				pointD = polynomialTermPtr;
+			}
+			else
+			{
+				pointD->nextTermPtr = newNode;
+				pointD = pointD->nextTermPtr;
+			}
+			pointB = pointB->nextTermPtr;
+		}
 	}
 
 	void reverseLinkBasedPoly() //* add your code here
 	{
+		if (!polynomialTermPtr || !polynomialTermPtr->nextTermPtr)
+			return;
 
-		return;
+		LinkedPolynomialTerm *prevNode = nullptr;
+		LinkedPolynomialTerm *currNode = polynomialTermPtr;
+		LinkedPolynomialTerm *postNode = polynomialTermPtr->nextTermPtr;
+
+		while (postNode)
+		{
+			currNode->nextTermPtr = prevNode;
+			prevNode = currNode;
+			currNode = postNode;
+			postNode = postNode->nextTermPtr;
+		}
+		currNode->nextTermPtr = prevNode;
+
+		polynomialTermPtr = currNode;
 	}
 
 	void printLinkBasedPoly()
@@ -163,8 +394,17 @@ public:
 
 	int compute(int x) //* add your code here
 	{
+		int sum = 0;
 
-		return 0;
+		LinkedPolynomialTerm *currNode = polynomialTermPtr;
+
+		while (currNode)
+		{
+			sum += currNode->coef * pow(x, currNode->expo);
+			currNode = currNode->nextTermPtr;
+		}
+
+		return sum;
 	}
 };
 
