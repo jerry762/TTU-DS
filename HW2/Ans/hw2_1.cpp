@@ -26,7 +26,7 @@ polynomial Zero(polynomial p)
 	return p;
 }
 
-int IsZero(polynomial p)
+int IsZero(polynomial p) //* add your code here
 {
 	for (int i = p.degree; i >= 0; i--)
 	{
@@ -44,7 +44,7 @@ int Lead_Exp(polynomial p)
 	return p.degree;
 }
 
-int COMPARE(int i, int j)
+int COMPARE(int i, int j) //* add your code here
 {
 	if (i > j)
 		return 1;
@@ -59,7 +59,7 @@ int Coef(polynomial p, int expo)
 	return p.coef[expo];
 }
 
-polynomial Attach(polynomial p, int coef, int expo)
+polynomial Attach(polynomial p, int coef, int expo) //* add your code here
 {
 	if (p.degree < expo)
 		p.degree = expo;
@@ -69,7 +69,7 @@ polynomial Attach(polynomial p, int coef, int expo)
 	return p;
 }
 
-polynomial Remove(polynomial p, int expo)
+polynomial Remove(polynomial p, int expo) //* add your code here
 {
 	p.coef[expo] = 0;
 
@@ -118,7 +118,7 @@ void PrintPoly1(polynomial p)
 	}
 }
 
-void PrintPoly2(polynomial_term t[], int start, int finish)
+void PrintPoly2(polynomial_term t[], int start, int finish) //* add your code here
 {
 	for (int i = start; i <= finish; i++)
 	{
