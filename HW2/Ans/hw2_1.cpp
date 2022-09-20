@@ -28,10 +28,15 @@ polynomial Zero(polynomial p)
 
 int IsZero(polynomial p)
 {
+	for (int i = p.degree; i >= 0; i--)
+	{
+		if (p.coef[i] != 0)
+		{
+			return 0;
+		}
+	}
 
-	// add your code
-
-	return 0;
+	return 1;
 }
 
 int Lead_Exp(polynomial p)
@@ -41,10 +46,12 @@ int Lead_Exp(polynomial p)
 
 int COMPARE(int i, int j)
 {
-
-	// add your code
-
-	return 0;
+	if (i > j)
+		return 1;
+	else if (i < j)
+		return -1;
+	else
+		return 0;
 }
 
 int Coef(polynomial p, int expo)
@@ -54,16 +61,26 @@ int Coef(polynomial p, int expo)
 
 polynomial Attach(polynomial p, int coef, int expo)
 {
+	if (p.degree < expo)
+		p.degree = expo;
 
-	// add your code
+	p.coef[expo] = coef;
 
 	return p;
 }
 
 polynomial Remove(polynomial p, int expo)
 {
+	p.coef[expo] = 0;
 
-	// add your code
+	for (int i = expo - 1; i >= 0; i--)
+	{
+		if (p.coef[i] != 0)
+		{
+			p.degree = i;
+			break;
+		}
+	}
 
 	return p;
 }
@@ -103,8 +120,26 @@ void PrintPoly1(polynomial p)
 
 void PrintPoly2(polynomial_term t[], int start, int finish)
 {
-
-	// add your code
+	for (int i = start; i <= finish; i++)
+	{
+		if (t[i].coef != 0)
+		{
+			if (i == start)
+			{
+				if (t[i].expo == 0)
+					printf("%d", t[i].coef);
+				else
+					printf("%dX^%d", t[i].coef, t[i].expo);
+			}
+			else
+			{
+				if (t[i].expo == 0)
+					printf(" + %d", t[i].coef);
+				else
+					printf(" + %dX^%d", t[i].coef, t[i].expo);
+			}
+		}
+	}
 }
 
 polynomial padd1(polynomial p1, polynomial p2)
@@ -254,6 +289,7 @@ int main()
 	PrintPoly1(b);
 	printf("\nb = ");
 	PrintPoly2(terms, startb, finishb);
+	printf("\n");
 
 	/* d =a + b, where a, b, and d are polynomials */
 

@@ -77,7 +77,7 @@ void List::insert(int value)
 
         while (currNode)
         {
-            if (currNode->getValue() > value)
+            if (currNode->getValue() >= value)
             {
                 if (m_headNode == currNode)
                     m_headNode = newNode;

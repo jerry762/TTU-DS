@@ -50,7 +50,7 @@ int main(void)
 
                 while (currNode)
                 {
-                    if (currNode->value > num)
+                    if (currNode->value >= num)
                     {
                         if (list.headNode == currNode)
                             list.headNode = newNode;
