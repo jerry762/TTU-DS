@@ -47,14 +47,99 @@ void printArrayBasedPoly(polynomialTerm t[])
 
 void inputTerm(polynomialTerm t[], int coef, int expo) //* add your code here
 {
+	if (coef == 0)
+		return;
 
-	return;
+	int size = 0;
+
+	for (int i = 0; i < MAX_TERMS; i++)
+	{
+		if (t[i].coef != 0)
+		{
+			size++;
+		}
+	}
+
+	t[size].expo = expo;
+	t[size].coef = coef;
+
+	if (size == 0)
+		return;
+
+	for (int i = 0; i < size; i++)
+	{
+		if (expo > t[i].expo)
+		{
+			for (int j = 0; j < size - i; j++)
+				t[size - j] = t[size - 1 - j];
+
+			t[i].expo = expo;
+			t[i].coef = coef;
+
+			break;
+		}
+		else if (expo == t[i].expo)
+		{
+			t[i].coef = coef;
+			t[size].expo = 0;
+			t[size].coef = 0;
+			break;
+		}
+	}
 }
 
 void addArrayBasedPoly(polynomialTerm a[], polynomialTerm b[], polynomialTerm d[]) //* add your code here
 {
+	int pointA = 0;
+	int pointB = 0;
+	int pointD = 0;
 
-	return;
+	while (a[pointA].coef != 0 && b[pointB].coef != 0)
+	{
+		if (a[pointA].expo > b[pointB].expo)
+		{
+			d[pointD].expo = a[pointA].expo;
+			d[pointD].coef = a[pointA].coef;
+
+			pointA++;
+			pointD++;
+		}
+		else if (a[pointA].expo < b[pointB].expo)
+		{
+			d[pointD].expo = b[pointB].expo;
+			d[pointD].coef = b[pointB].coef;
+
+			pointB++;
+			pointD++;
+		}
+		else
+		{
+			d[pointD].expo = a[pointA].expo;
+			d[pointD].coef = a[pointA].coef + b[pointB].coef;
+
+			pointA++;
+			pointB++;
+			pointD++;
+		}
+	}
+
+	while (a[pointA].coef != 0)
+	{
+		d[pointD].expo = a[pointA].expo;
+		d[pointD].coef = a[pointA].coef;
+
+		pointD++;
+		pointA++;
+	}
+
+	while (b[pointB].coef != 0)
+	{
+		d[pointD].expo = b[pointB].expo;
+		d[pointD].coef = b[pointB].coef;
+
+		pointB++;
+		pointD++;
+	}
 }
 
 int main()
