@@ -100,7 +100,6 @@ void addArrayBasedPoly(polynomialTerm a[], polynomialTerm b[], polynomialTerm d[
 		{
 			d[pointD].expo = a[pointA].expo;
 			d[pointD].coef = a[pointA].coef;
-
 			pointA++;
 			pointD++;
 		}
@@ -108,18 +107,19 @@ void addArrayBasedPoly(polynomialTerm a[], polynomialTerm b[], polynomialTerm d[
 		{
 			d[pointD].expo = b[pointB].expo;
 			d[pointD].coef = b[pointB].coef;
-
 			pointB++;
 			pointD++;
 		}
 		else
 		{
-			d[pointD].expo = a[pointA].expo;
-			d[pointD].coef = a[pointA].coef + b[pointB].coef;
-
+			if (a[pointA].coef + b[pointB].coef != 0)
+			{
+				d[pointD].expo = a[pointA].expo;
+				d[pointD].coef = a[pointA].coef + b[pointB].coef;
+				pointD++;
+			}
 			pointA++;
 			pointB++;
-			pointD++;
 		}
 	}
 
@@ -127,7 +127,6 @@ void addArrayBasedPoly(polynomialTerm a[], polynomialTerm b[], polynomialTerm d[
 	{
 		d[pointD].expo = a[pointA].expo;
 		d[pointD].coef = a[pointA].coef;
-
 		pointD++;
 		pointA++;
 	}
@@ -136,7 +135,6 @@ void addArrayBasedPoly(polynomialTerm a[], polynomialTerm b[], polynomialTerm d[
 	{
 		d[pointD].expo = b[pointB].expo;
 		d[pointD].coef = b[pointB].coef;
-
 		pointB++;
 		pointD++;
 	}

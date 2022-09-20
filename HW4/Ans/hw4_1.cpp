@@ -142,7 +142,6 @@ void addArrayBasedPoly(polynomialTerm a[], polynomialTerm b[], polynomialTerm d[
 		{
 			d[pointD].expo = a[pointA].expo;
 			d[pointD].coef = a[pointA].coef;
-
 			pointA++;
 			pointD++;
 		}
@@ -150,18 +149,19 @@ void addArrayBasedPoly(polynomialTerm a[], polynomialTerm b[], polynomialTerm d[
 		{
 			d[pointD].expo = b[pointB].expo;
 			d[pointD].coef = b[pointB].coef;
-
 			pointB++;
 			pointD++;
 		}
 		else
 		{
-			d[pointD].expo = a[pointA].expo;
-			d[pointD].coef = a[pointA].coef + b[pointB].coef;
-
+			if (a[pointA].coef + b[pointB].coef != 0)
+			{
+				d[pointD].expo = a[pointA].expo;
+				d[pointD].coef = a[pointA].coef + b[pointB].coef;
+				pointD++;
+			}
 			pointA++;
 			pointB++;
-			pointD++;
 		}
 	}
 
@@ -202,21 +202,25 @@ linkedPolynomialTerm *addLinkBasedPoly(linkedPolynomialTerm *aPtr, linkedPolynom
 		{
 			newNode->expo = pointA->expo;
 			newNode->coef = pointA->coef;
-
 			pointA = pointA->nextTermPtr;
 		}
 		else if (pointA->expo < pointB->expo)
 		{
 			newNode->expo = pointB->expo;
 			newNode->coef = pointB->coef;
-
 			pointB = pointB->nextTermPtr;
 		}
 		else
 		{
+			if (pointA->coef + pointB->coef == 0)
+			{
+				pointA = pointA->nextTermPtr;
+				pointB = pointB->nextTermPtr;
+				delete newNode;
+				continue;
+			}
 			newNode->expo = pointA->expo;
 			newNode->coef = pointA->coef + pointB->coef;
-
 			pointA = pointA->nextTermPtr;
 			pointB = pointB->nextTermPtr;
 		}

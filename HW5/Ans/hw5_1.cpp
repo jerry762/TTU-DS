@@ -98,11 +98,14 @@ public:
 			}
 			else
 			{
-				terms[pointD].expo = a.terms[pointA].expo;
-				terms[pointD].coef = a.terms[pointA].coef + b.terms[pointB].coef;
+				if (a.terms[pointA].coef + b.terms[pointB].coef != 0)
+				{
+					terms[pointD].expo = a.terms[pointA].expo;
+					terms[pointD].coef = a.terms[pointA].coef + b.terms[pointB].coef;
+					pointD++;
+				}
 				pointA++;
 				pointB++;
-				pointD++;
 			}
 		}
 
@@ -280,6 +283,13 @@ public:
 			}
 			else
 			{
+				if (pointA->coef + pointB->coef == 0)
+				{
+					pointA = pointA->nextTermPtr;
+					pointB = pointB->nextTermPtr;
+					delete newNode;
+					continue;
+				}
 				newNode->expo = pointA->expo;
 				newNode->coef = pointA->coef + pointB->coef;
 				pointA = pointA->nextTermPtr;
