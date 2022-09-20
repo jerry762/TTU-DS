@@ -88,6 +88,46 @@ void inputTerms(polynomialTerm terms[], int coef, int expo) //* add your code he
 
 void inputLinkTerms(linkedPolynomialTerm *&polyPtr, int coef, int expo) //* add your code here
 {
+	if (coef == 0)
+		return;
+
+	linkedPolynomialTerm *newNode = new linkedPolynomialTerm;
+
+	newNode->expo = expo;
+	newNode->coef = coef;
+	newNode->nextTermPtr = nullptr;
+
+	if (!polyPtr)
+		polyPtr = newNode;
+	else
+	{
+		linkedPolynomialTerm *currNode = polyPtr;
+		linkedPolynomialTerm *prevNode = nullptr;
+
+		while (currNode)
+		{
+			if (expo > currNode->expo)
+			{
+				if (currNode == polyPtr)
+					polyPtr = newNode;
+				else
+					prevNode->nextTermPtr = newNode;
+
+				newNode->nextTermPtr = currNode;
+				break;
+			}
+			else if (expo == currNode->expo)
+			{
+				currNode->coef = coef;
+				delete newNode;
+				break;
+			}
+			prevNode = currNode;
+			currNode = currNode->nextTermPtr;
+		}
+		if (!currNode)
+			prevNode->nextTermPtr = newNode;
+	}
 }
 
 void addArrayBasedPoly(polynomialTerm a[], polynomialTerm b[], polynomialTerm d[]) //* add your code here
@@ -146,6 +186,96 @@ void addArrayBasedPoly(polynomialTerm a[], polynomialTerm b[], polynomialTerm d[
 
 linkedPolynomialTerm *addLinkBasedPoly(linkedPolynomialTerm *aPtr, linkedPolynomialTerm *bPtr) //* add your code here
 {
+	linkedPolynomialTerm *dPtr = nullptr;
+
+	linkedPolynomialTerm *pointA = aPtr;
+	linkedPolynomialTerm *pointB = bPtr;
+	linkedPolynomialTerm *pointD = dPtr;
+
+	while (pointA && pointB)
+	{
+		linkedPolynomialTerm *newNode = new linkedPolynomialTerm;
+
+		newNode->nextTermPtr = nullptr;
+
+		if (pointA->expo > pointB->expo)
+		{
+			newNode->expo = pointA->expo;
+			newNode->coef = pointA->coef;
+
+			pointA = pointA->nextTermPtr;
+		}
+		else if (pointA->expo < pointB->expo)
+		{
+			newNode->expo = pointB->expo;
+			newNode->coef = pointB->coef;
+
+			pointB = pointB->nextTermPtr;
+		}
+		else
+		{
+			newNode->expo = pointA->expo;
+			newNode->coef = pointA->coef + pointB->coef;
+
+			pointA = pointA->nextTermPtr;
+			pointB = pointB->nextTermPtr;
+		}
+
+		if (!dPtr)
+		{
+			dPtr = newNode;
+			pointD = dPtr;
+		}
+		else
+		{
+			pointD->nextTermPtr = newNode;
+			pointD = pointD->nextTermPtr;
+		}
+	}
+
+	while (pointA)
+	{
+		linkedPolynomialTerm *newNode = new linkedPolynomialTerm;
+
+		newNode->expo = pointA->expo;
+		newNode->coef = pointA->coef;
+		newNode->nextTermPtr = nullptr;
+
+		if (!dPtr)
+		{
+			dPtr = newNode;
+			pointD = dPtr;
+		}
+		else
+		{
+			pointD->nextTermPtr = newNode;
+			pointD = pointD->nextTermPtr;
+		}
+		pointA = pointA->nextTermPtr;
+	}
+
+	while (pointB)
+	{
+		linkedPolynomialTerm *newNode = new linkedPolynomialTerm;
+
+		newNode->expo = pointB->expo;
+		newNode->coef = pointB->coef;
+		newNode->nextTermPtr = nullptr;
+
+		if (!dPtr)
+		{
+			dPtr = newNode;
+			pointD = dPtr;
+		}
+		else
+		{
+			pointD->nextTermPtr = newNode;
+			pointD = pointD->nextTermPtr;
+		}
+		pointB = pointB->nextTermPtr;
+	}
+
+	return dPtr;
 }
 
 void printArrayBasedPoly(polynomialTerm terms[])
