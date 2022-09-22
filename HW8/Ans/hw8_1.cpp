@@ -23,33 +23,79 @@ void pushAndCorrectDeque(string &aString, deque<char> &aDeque) //* add your code
 {
 	for (int i = 0; i < aString.size(); i++)
 	{
-		if (aString[i] == '<')
+		if (aString.at(i) == '<')
 		{
+			if (!aDeque.empty())
+			{
+				aDeque.pop_back();
+			}
 		}
-
 		else
 		{
+			aDeque.push_back(aString.at(i));
 		}
 	}
 }
 
 void pushAndCorrectStackQueue(string &aString, stack<char> &aStack, queue<char> &aQueue) //* add your code here
 {
-	for (int i = 0; i < aString.size(); i++)
+	int count = 0;
+
+	for (int i = aString.size() - 1; i >= 0; i--)
 	{
+		if (aString.at(i) == '<')
+			count++;
+		else
+		{
+			if (count != 0)
+				count--;
+			else
+				aStack.push(aString.at(i));
+		}
+	}
+
+	while (!aStack.empty())
+	{
+		aQueue.push(aStack.top());
+		aStack.pop();
 	}
 }
 
 bool isPalindromeDeque(deque<char> aDeque) //* add your code here
 {
+	while (!aDeque.empty() && aDeque.size() != 1)
+	{
+		if (aDeque.front() != aDeque.back())
+			return false;
 
-	return false;
+		aDeque.pop_front();
+		aDeque.pop_back();
+	}
+
+	return true;
 }
 
 bool isPalindromeStackQueue(stack<char> aStack, queue<char> aQueue) //* add your code here
 {
+	for (int i = (aQueue.size() / 2) - 1; i >= 0; i--)
+	{
+		aStack.push(aQueue.front());
+		aQueue.pop();
+	}
 
-	return false;
+	if ((aQueue.size() + aStack.size()) % 2)
+		aQueue.pop();
+
+	while (!aStack.empty())
+	{
+		if (aStack.top() != aQueue.front())
+			return false;
+
+		aStack.pop();
+		aQueue.pop();
+	}
+
+	return true;
 }
 
 int main()
