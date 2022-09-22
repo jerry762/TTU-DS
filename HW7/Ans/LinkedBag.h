@@ -226,14 +226,53 @@ Node<ItemType> *LinkedBag<ItemType>::getPointerTo(const ItemType &anEntry) const
 template <class ItemType>
 bool LinkedBag<ItemType>::addLast(const ItemType &newEntry) //* add your code here
 {
+   Node<ItemType> *newNode = new Node<ItemType>(newEntry);
 
+   if (isEmpty())
+      headPtr = newNode;
+   else
+   {
+      Node<ItemType> *currNode = headPtr;
+
+      while (currNode->getNext())
+      {
+         currNode = currNode->getNext();
+      }
+
+      currNode->setNext(newNode);
+   }
+
+   itemCount++;
    return true;
 } // end add
 
 template <class ItemType>
 bool LinkedBag<ItemType>::add2ndToLast(const ItemType &newEntry) //* add your code here
 {
+   Node<ItemType> *newNode = new Node<ItemType>(newEntry);
 
+   if (isEmpty())
+      headPtr = newNode;
+   else
+   {
+      Node<ItemType> *currNode = headPtr;
+      Node<ItemType> *prevNode = nullptr;
+
+      while (currNode->getNext())
+      {
+         prevNode = currNode;
+         currNode = currNode->getNext();
+      }
+
+      if (!prevNode)
+         headPtr = newNode;
+      else
+         prevNode->setNext(newNode);
+
+      newNode->setNext(currNode);
+   }
+
+   itemCount++;
    return true;
 } // end add
 
@@ -242,6 +281,27 @@ bool LinkedBag<ItemType>::removeLast() //* add your code here
 {
    bool canRemoveItem = !isEmpty();
 
+   if (canRemoveItem)
+   {
+      Node<ItemType> *currNode = headPtr;
+      Node<ItemType> *prevNode = nullptr;
+
+      while (currNode->getNext())
+      {
+         prevNode = currNode;
+         currNode = currNode->getNext();
+      }
+
+      if (!prevNode)
+         headPtr = nullptr;
+      else
+         prevNode->setNext(nullptr);
+
+      delete currNode;
+
+      itemCount--;
+   }
+
    return canRemoveItem;
 } // end remove
 
@@ -249,6 +309,35 @@ template <class ItemType>
 bool LinkedBag<ItemType>::remove2ndToLast() //* add your code here
 {
    bool canRemoveItem = !isEmpty();
+
+   if (canRemoveItem)
+   {
+      Node<ItemType> *currNode = headPtr;
+
+      if (!headPtr->getNext())
+      {
+         delete currNode;
+         headPtr = nullptr;
+      }
+      else
+      {
+         Node<ItemType> *prevNode = nullptr;
+
+         while (currNode->getNext()->getNext())
+         {
+            prevNode = currNode;
+            currNode = currNode->getNext();
+         }
+
+         if (!prevNode)
+            headPtr = currNode->getNext();
+         else
+            prevNode->setNext(currNode->getNext());
+
+         delete currNode;
+      }
+      itemCount--;
+   }
 
    return canRemoveItem;
 } // end remove
