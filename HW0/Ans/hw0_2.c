@@ -1,19 +1,26 @@
 #include <stdio.h>
+#include <ctype.h>
+
+#define MAX_LENGTH 100
+
+void printArr(int *arr, int len);
 
 int main(void)
 {
     char cmd = 0;
-    int arr[100] = {0};
+    int arr[MAX_LENGTH] = {0};
     size_t len = 0;
     int num = 0;
 
-    while (cmd != 'E' && cmd != 'e')
+    while (tolower(cmd) != 'e')
     {
-        printf("Input or delete: ");
+        printf("Input or delete(i to input | d to delete | e to end): ");
 
-        scanf("%c", &cmd);
+        cmd = getchar();
 
-        if (cmd == 'I' || cmd == 'i')
+        switch (tolower(cmd))
+        {
+        case 'i':
         {
             printf("Input number: ");
             scanf("%d", &num);
@@ -21,11 +28,11 @@ int main(void)
 
             arr[len] = num;
 
-            for (int i = 0; i < len; i++)
+            for (size_t i = 0; i < len; i++)
             {
                 if (arr[i] > num)
                 {
-                    for (int j = 0; j < len - i; j++)
+                    for (size_t j = 0; j < len - i; j++)
                     {
                         arr[len - j] = arr[len - 1 - j];
                     }
@@ -34,26 +41,29 @@ int main(void)
                 }
             }
             len++;
+
+            printArr(arr, len);
         }
-        else if (cmd == 'D' || cmd == 'd')
+        break;
+        case 'd':
         {
             printf("Delete number: ");
             scanf("%d", &num);
             getchar();
 
-            for (int i = 0; i < len; i++)
+            for (size_t i = 0; i < len; i++)
             {
                 if (arr[i] == num)
                 {
                     int delNum = 1;
 
-                    for (int j = i + 1; j < len; j++)
+                    for (size_t j = i + 1; j < len; j++)
                     {
                         if (arr[j] == num)
                             delNum++;
                         else
                         {
-                            for (int k = 0; k < len - delNum - i; k++)
+                            for (size_t k = 0; k < len - delNum - i; k++)
                             {
                                 arr[i + k] = arr[j + k];
                             }
@@ -64,19 +74,31 @@ int main(void)
                     break;
                 }
             }
-        }
 
-        if (len)
-        {
-            for (int i = 0; i < len; i++)
-            {
-                printf("%d ", arr[i]);
-            }
+            printArr(arr, len);
         }
-        else
-            printf("empty !");
-
+        break;
+        case 'e':
+            continue;
+        default:
+            printf("invalid input !");
+            getchar();
+            break;
+        }
         printf("\n\n");
     }
     return 0;
+}
+
+void printArr(int *arr, int len)
+{
+    if (len)
+    {
+        for (int i = 0; i < len; i++)
+        {
+            printf("%d ", arr[i]);
+        }
+    }
+    else
+        printf("empty !");
 }
