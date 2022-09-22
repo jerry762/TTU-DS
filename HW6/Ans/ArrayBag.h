@@ -196,40 +196,67 @@ int ArrayBag<ItemType>::getIndexOf(const ItemType &target) const
 } // end getIndexOf
 
 template <class ItemType>
-bool ArrayBag<ItemType>::addFirst(const ItemType &newEntry)
+bool ArrayBag<ItemType>::addFirst(const ItemType &newEntry) //* add your code here.
 {
+   bool hasRoomToAdd = (itemCount < maxItems);
 
-   // add your code here.
+   if (hasRoomToAdd)
+   {
+      items[itemCount] = items[0];
+      items[0] = newEntry;
+      itemCount++;
+   }
 
-   return false;
+   return hasRoomToAdd;
 } // end addFirst
 
 template <class ItemType>
-bool ArrayBag<ItemType>::insertFirst(const ItemType &newEntry)
+bool ArrayBag<ItemType>::insertFirst(const ItemType &newEntry) //* add your code here.
 {
+   bool hasRoomToAdd = (itemCount < maxItems);
 
-   // add your code here.
+   if (hasRoomToAdd)
+   {
+      for (size_t i = 0; i < itemCount; i++)
+      {
+         items[itemCount - i] = items[itemCount - 1 - i];
+      }
+      items[0] = newEntry;
+      itemCount++;
+   }
 
-   return false;
+   return hasRoomToAdd;
 } // end insertFirst
 
 template <class ItemType>
-bool ArrayBag<ItemType>::removeFirst()
+bool ArrayBag<ItemType>::removeFirst() //* add your code here.
 {
+   bool canRemoveItem = !isEmpty();
 
-   // add your code here.
+   if (canRemoveItem)
+   {
+      items[0] = items[itemCount - 1];
+      itemCount--;
+   }
 
-   return false;
+   return canRemoveItem;
 } // end removeFirst
 
 template <class ItemType>
-bool ArrayBag<ItemType>::deleteFirst()
+bool ArrayBag<ItemType>::deleteFirst() //* add your code here.
 {
+   bool canRemoveItem = !isEmpty();
 
-   // add your code here.
+   if (canRemoveItem)
+   {
+      for (size_t i = 0; i < itemCount - 1; i++)
+      {
+         items[0 + i] = items[1 + i];
+      }
+      itemCount--;
+   }
 
-   return false;
-
+   return canRemoveItem;
 } // end deleteFirst
 
 //#endif
