@@ -16,28 +16,33 @@ struct List
     Node *headNode;
 };
 
+void printList(List list);
+
 int main(void)
 {
     List list;
     char cmd = 0;
-    int num = 0;
 
     list.headNode = NULL;
 
     while (tolower(cmd) != 'e')
     {
-        printf("Input or delete: ");
+        printf("Input or delete(i to input | d to delete | e to end): ");
 
-        scanf("%c", &cmd);
+        cmd = getchar();
 
         switch (tolower(cmd))
         {
         case 'i':
         {
+            int num = 0;
+
             Node *newNode = (Node *)calloc(1, sizeof(Node));
 
             printf("Input number: ");
             scanf("%d", &num);
+
+            getchar();
 
             newNode->value = num;
 
@@ -66,15 +71,20 @@ int main(void)
                 if (!currNode)
                     prevNode->nextNode = newNode;
             }
+            printList(list);
         }
         break;
         case 'd':
         {
+            int num = 0;
+
             Node *currNode = list.headNode;
             Node *prevNode = NULL;
 
             printf("Delete number: ");
             scanf("%d", &num);
+
+            getchar();
 
             while (currNode)
             {
@@ -99,30 +109,33 @@ int main(void)
                 prevNode = currNode;
                 currNode = currNode->nextNode;
             }
+            printList(list);
         }
         break;
-        default:
-            printf("invalid input !\n\n");
-            getchar();
+        case 'e':
             continue;
+        default:
+            printf("Invalid input !");
+            getchar();
+            break;
         }
-
-        if (list.headNode)
-        {
-            Node *currNode = list.headNode;
-
-            while (currNode)
-            {
-                printf("%d ", currNode->value);
-                currNode = currNode->nextNode;
-            }
-        }
-        else
-            printf("empty !");
-
-        getchar();
         printf("\n\n");
     }
-
     return 0;
+}
+
+void printList(List list)
+{
+    if (list.headNode)
+    {
+        Node *currNode = list.headNode;
+
+        while (currNode)
+        {
+            printf("%d ", currNode->value);
+            currNode = currNode->nextNode;
+        }
+    }
+    else
+        printf("Empty !");
 }

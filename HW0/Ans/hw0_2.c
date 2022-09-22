@@ -103,5 +103,5 @@ void printArr(int *arr, size_t len)
         }
     }
     else
-        printf("empty !");
+        printf("Empty !");
 }

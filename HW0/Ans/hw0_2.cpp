@@ -102,5 +102,5 @@ void printArr(array<int, MAX_LENGTH> &arr, size_t arrLen)
         }
     }
     else
-        printf("empty !");
+        printf("Empty !");
 }

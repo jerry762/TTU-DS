@@ -124,13 +124,19 @@ void List::remove(int value)
 
 ostream &operator<<(ostream &out, const List &list)
 {
-    shared_ptr<Node> currNode = list.m_headNode;
-
-    while (currNode)
+    if (!list.empty())
     {
-        out << currNode->getValue() << " ";
-        currNode = currNode->getNextNode();
+        shared_ptr<Node> currNode = list.m_headNode;
+
+        while (currNode)
+        {
+            out << currNode->getValue() << " ";
+            currNode = currNode->getNextNode();
+        }
     }
+    else
+        cout << "Empty !";
+
     return out;
 }
 
@@ -138,35 +144,40 @@ int main()
 {
     List list;
     char cmd = 0;
-    int num = 0;
 
     while (tolower(cmd) != 'e')
     {
-        cout << "Input or delete: ";
+        cout << "Input or delete(i to input | d to delete | e to end): ";
         cin >> cmd;
 
         switch (tolower(cmd))
         {
         case 'i':
+        {
+            int num = 0;
+
             cout << "Input number: ";
             cin >> num;
             list.insert(num);
-            break;
+            cout << list;
+        }
+        break;
         case 'd':
+        {
+            int num = 0;
+
             cout << "Delete number: ";
             cin >> num;
             list.remove(num);
-            break;
-        default:
-            cout << "invalid input !\n"
-                 << endl;
-            continue;
-        }
-
-        if (!list.empty())
             cout << list;
-        else
-            cout << "empty !";
+        }
+        break;
+        case 'e':
+            continue;
+        default:
+            cout << "Invalid input !";
+            break;
+        }
 
         cout << "\n"
              << endl;
