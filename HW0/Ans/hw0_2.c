@@ -24,7 +24,7 @@ int main(void)
         {
             printf("Input number: ");
             scanf("%d", &num);
-            getchar();
+            // getchar();
 
             arr[len] = num;
 
