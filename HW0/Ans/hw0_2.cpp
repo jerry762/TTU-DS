@@ -1,32 +1,40 @@
 #include <array>
 #include <iostream>
+#include <cctype>
+
+#define MAX_LENGTH 100
 
 using namespace std;
+
+void printArr(array<int, MAX_LENGTH> &arr, size_t arrLen);
 
 int main()
 {
     char cmd = 0;
-    array<int, 100> arr{0};
-    int num = 0;
+    array<int, MAX_LENGTH> arr{0};
     size_t arrLen = 0;
 
-    while (cmd != 'E' && cmd != 'e')
+    while (tolower(cmd) != 'e')
     {
-        cout << "Input or delete: ";
+        cout << "Input or delete(i to input | d to delete | e to end): ";
         cin >> cmd;
 
-        if (cmd == 'I' || cmd == 'i')
+        switch (cmd)
         {
+        case 'i':
+        {
+            int num = 0;
+
             cout << "Input number: ";
             cin >> num;
 
             arr.at(arrLen) = num;
 
-            for (int i = 0; i < arrLen; i++)
+            for (size_t i = 0; i < arrLen; i++)
             {
                 if (arr.at(i) > num)
                 {
-                    for (int j = 0; j < arrLen - i; j++)
+                    for (size_t j = 0; j < arrLen - i; j++)
                     {
                         arr.at(arrLen - j) = arr.at(arrLen - 1 - j);
                     }
@@ -34,27 +42,30 @@ int main()
                     break;
                 }
             }
-
             arrLen++;
+            printArr(arr, arrLen);
         }
-        else if (cmd == 'D' || cmd == 'd')
+        break;
+        case 'd':
         {
+            int num = 0;
+
             cout << "Delete number: ";
             cin >> num;
 
-            for (int i = 0; i < arrLen; i++)
+            for (size_t i = 0; i < arrLen; i++)
             {
                 if (arr.at(i) == num)
                 {
-                    int delNum = 1;
+                    size_t delNum = 1;
 
-                    for (int j = i + 1; j < arrLen; j++)
+                    for (size_t j = i + 1; j < arrLen; j++)
                     {
                         if (arr.at(j) == num)
                             delNum++;
                         else
                         {
-                            for (int k = 0; k < arrLen - delNum - i; k++)
+                            for (size_t k = 0; k < arrLen - delNum - i; k++)
                             {
                                 arr.at(i + k) = arr.at(j + k);
                             }
@@ -65,21 +76,31 @@ int main()
                     break;
                 }
             }
+            printArr(arr, arrLen);
         }
-
-        if (arrLen)
-        {
-            for (int i = 0; i < arrLen; i++)
-            {
-                cout << arr.at(i) << " ";
-            }
+        break;
+        case 'e':
+            continue;
+        default:
+            cout << "Invalid input! ";
+            break;
         }
-        else
-            printf("empty !");
 
         cout << "\n"
              << endl;
     }
-
     return 0;
+}
+
+void printArr(array<int, MAX_LENGTH> &arr, size_t arrLen)
+{
+    if (arrLen)
+    {
+        for (size_t i = 0; i < arrLen; i++)
+        {
+            cout << arr.at(i) << " ";
+        }
+    }
+    else
+        printf("empty !");
 }

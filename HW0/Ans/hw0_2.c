@@ -3,14 +3,13 @@
 
 #define MAX_LENGTH 100
 
-void printArr(int *arr, int len);
+void printArr(int *arr, size_t len);
 
 int main(void)
 {
     char cmd = 0;
     int arr[MAX_LENGTH] = {0};
     size_t len = 0;
-    int num = 0;
 
     while (tolower(cmd) != 'e')
     {
@@ -22,6 +21,8 @@ int main(void)
         {
         case 'i':
         {
+            int num = 0;
+
             printf("Input number: ");
             scanf("%d", &num);
             getchar();
@@ -47,6 +48,8 @@ int main(void)
         break;
         case 'd':
         {
+            int num = 0;
+
             printf("Delete number: ");
             scanf("%d", &num);
             getchar();
@@ -55,7 +58,7 @@ int main(void)
             {
                 if (arr[i] == num)
                 {
-                    int delNum = 1;
+                    size_t delNum = 1;
 
                     for (size_t j = i + 1; j < len; j++)
                     {
@@ -81,7 +84,7 @@ int main(void)
         case 'e':
             continue;
         default:
-            printf("invalid input !");
+            printf("Invalid input !");
             getchar();
             break;
         }
@@ -90,11 +93,11 @@ int main(void)
     return 0;
 }
 
-void printArr(int *arr, int len)
+void printArr(int *arr, size_t len)
 {
     if (len)
     {
-        for (int i = 0; i < len; i++)
+        for (size_t i = 0; i < len; i++)
         {
             printf("%d ", arr[i]);
         }
