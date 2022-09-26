@@ -62,9 +62,12 @@ int Coef(polynomial p, int expo)
 polynomial Attach(polynomial p, int coef, int expo) //* add your code here
 {
 	if (p.degree < expo)
+	{
 		p.degree = expo;
-
-	p.coef[expo] = coef;
+		p.coef[expo] = coef;
+	}
+	else
+		p.coef[expo] = coef;
 
 	return p;
 }
@@ -120,16 +123,19 @@ void PrintPoly1(polynomial p)
 
 void PrintPoly2(polynomial_term t[], int start, int finish) //* add your code here
 {
+	bool flag = true;
+
 	for (int i = start; i <= finish; i++)
 	{
 		if (t[i].coef != 0)
 		{
-			if (i == start)
+			if (flag)
 			{
 				if (t[i].expo == 0)
 					printf("%d", t[i].coef);
 				else
 					printf("%dX^%d", t[i].coef, t[i].expo);
+				flag = false;
 			}
 			else
 			{
