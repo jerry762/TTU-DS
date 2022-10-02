@@ -115,27 +115,32 @@ public:
 template <class ItemType>
 int BinaryNodeTree<ItemType>::getHighestFullLevelHelper(BinaryNode<ItemType> *subTreePtr) const //* add your code here
 {
-
-   // add your code here
-
-   return 1;
+   if (!subTreePtr->getLeftChildPtr() || !subTreePtr->getRightChildPtr())
+   {
+      return 1;
+   }
+   return 1 + min(getHighestFullLevelHelper(subTreePtr->getLeftChildPtr()),
+                  getHighestFullLevelHelper(subTreePtr->getRightChildPtr()));
 }
 
 template <class ItemType>
 int BinaryNodeTree<ItemType>::getMaximumHelper(BinaryNode<ItemType> *subTreePtr) const //* add your code here
 {
-
-   // add your code here
-
-   return INT_MIN;
+   if (subTreePtr)
+   {
+      return max(subTreePtr->getItem(), max(getMaximumHelper(subTreePtr->getLeftChildPtr()),
+                                            getMaximumHelper(subTreePtr->getRightChildPtr())));
+   }
+   return 0;
 }
 
 template <class ItemType>
 int BinaryNodeTree<ItemType>::getNumberOfNodesHelper(BinaryNode<ItemType> *subTreePtr) const //* add your code here
 {
-
-   // add your code here
-
+   if (subTreePtr)
+   {
+      return 1 + getNumberOfNodesHelper(subTreePtr->getLeftChildPtr()) + getNumberOfNodesHelper(subTreePtr->getRightChildPtr());
+   }
    return 0;
 }
 
