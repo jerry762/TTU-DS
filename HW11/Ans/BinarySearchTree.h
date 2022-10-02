@@ -156,32 +156,29 @@ void BinarySearchTree<ItemType>::levelorderTraverse(void visit(BinaryNode<ItemTy
 } // end inorderTraverse
 
 template <class ItemType>
-void BinarySearchTree<ItemType>::levelorder(void visit(BinaryNode<ItemType> &), BinaryNode<ItemType> *treePtr) const
+void BinarySearchTree<ItemType>::levelorder(void visit(BinaryNode<ItemType> &), BinaryNode<ItemType> *treePtr) const //* add your code here
 {
-	// the data structures that may be useful
 	queue<BinaryNode<ItemType> *> nodeQueue;
-	stack<BinaryNode<ItemType> *> nodeStack;
-	BinaryNode<ItemType> *tmpPtr = treePtr;
 
-	// the following is actually an interative inoder
-	// replace the code with yours
+	nodeQueue.push(treePtr);
 
-	do
+	while (!nodeQueue.empty())
 	{
-		while (tmpPtr != NULL)
-		{
-			nodeStack.push(tmpPtr);
-			tmpPtr = tmpPtr->getLeftChildPtr();
-		}
+		BinaryNode<ItemType> *tmpPtr = nodeQueue.front();
+		BinaryNode<ItemType> *leftNode = tmpPtr->getLeftChildPtr();
+		BinaryNode<ItemType> *rightNode = tmpPtr->getRightChildPtr();
 
-		if (!nodeStack.empty())
-		{
-			tmpPtr = nodeStack.top();
-			visit(*tmpPtr);
-			nodeStack.pop();
-			tmpPtr = tmpPtr->getRightChildPtr();
-		}
-	} while (!nodeStack.empty() || tmpPtr != NULL);
+		if (leftNode)
+			nodeQueue.push(leftNode);
+
+		if (rightNode)
+			nodeQueue.push(rightNode);
+
+		visit(*tmpPtr);
+
+		nodeQueue.pop();
+	}
+
 } // end levelorder
 
 template <class ItemType>
@@ -206,10 +203,15 @@ BinaryNode<ItemType> *BinarySearchTree<ItemType>::insertInorder(BinaryNode<ItemT
 		tempPtr = insertInorder(subTreePtr->getLeftChildPtr(), newNodePtr);
 		subTreePtr->setLeftChildPtr(tempPtr);
 	}
-	else
+	else if (subTreePtr->getItem() < newNodePtr->getItem())
 	{
 		tempPtr = insertInorder(subTreePtr->getRightChildPtr(), newNodePtr);
 		subTreePtr->setRightChildPtr(tempPtr);
+	}
+	else
+	{
+		subTreePtr->increaseCount();
+		delete newNodePtr;
 	}
 
 	return subTreePtr;
@@ -237,7 +239,11 @@ BinaryNode<ItemType> *BinarySearchTree<ItemType>::removeValue(BinaryNode<ItemTyp
 
 	if (subTreePtr->getItem() == target)
 	{
-		subTreePtr = removeNode(subTreePtr);
+		if (subTreePtr->getCount() == 1)
+			subTreePtr = removeNode(subTreePtr);
+		else
+			subTreePtr->decreaseCount();
+
 		success = true;
 		return subTreePtr;
 	}
@@ -284,10 +290,11 @@ BinaryNode<ItemType> *BinarySearchTree<ItemType>::removeNode(BinaryNode<ItemType
 	ItemType newNodeValue;
 	int newWordCount;
 
-	tempPtr = removeLeftmostNode(nodePtr->getRightChildPtr(), newNodeValue, newWordCount);
-	nodePtr->setRightChildPtr(tempPtr);
-	//	tempPtr = removeRightmostNode( nodePtr->getLeftChildPtr(), newNodeValue, newWordCount );
-	//	nodePtr->setLeftChildPtr( tempPtr );
+	// tempPtr = removeLeftmostNode(nodePtr->getRightChildPtr(), newNodeValue, newWordCount);
+	// nodePtr->setRightChildPtr(tempPtr);
+	tempPtr = removeRightmostNode(nodePtr->getLeftChildPtr(), newNodeValue, newWordCount);
+	nodePtr->setLeftChildPtr(tempPtr);
+
 	nodePtr->setItem(newNodeValue);
 	nodePtr->setCount(newWordCount);
 	return nodePtr;
@@ -304,15 +311,27 @@ BinaryNode<ItemType> *BinarySearchTree<ItemType>::removeLeftmostNode(BinaryNode<
 		return removeNode(nodePtr);
 	}
 	else
-		return removeLeftmostNode(nodePtr->getLeftChildPtr(), inorderSuccessor, newWordCount);
+	{
+		nodePtr->setLeftChildPtr(removeLeftmostNode(nodePtr->getLeftChildPtr(), inorderSuccessor, newWordCount));
+		return nodePtr;
+	}
 }
 
 template <class ItemType>
 BinaryNode<ItemType> *BinarySearchTree<ItemType>::removeRightmostNode(BinaryNode<ItemType> *nodePtr,
 																	  ItemType &inorderPredecessor, int &newWordCount)
 {
-
-	// add your code here
+	if (nodePtr->getRightChildPtr() == nullptr)
+	{
+		inorderPredecessor = nodePtr->getItem();
+		newWordCount = nodePtr->getCount();
+		return removeNode(nodePtr);
+	}
+	else
+	{
+		nodePtr->setRightChildPtr(removeRightmostNode(nodePtr->getRightChildPtr(), inorderPredecessor, newWordCount));
+		return nodePtr;
+	}
 }
 
 #endif
