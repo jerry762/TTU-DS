@@ -191,7 +191,7 @@ bool BinarySearchTree<ItemType>::add(const ItemType &newData)
 
 template <class ItemType>
 BinaryNode<ItemType> *BinarySearchTree<ItemType>::insertInorder(BinaryNode<ItemType> *subTreePtr,
-																BinaryNode<ItemType> *newNodePtr)
+																BinaryNode<ItemType> *newNodePtr) //* add your code here
 {
 	if (subTreePtr == nullptr)
 		return newNodePtr;
@@ -229,7 +229,7 @@ bool BinarySearchTree<ItemType>::remove(const ItemType &anEntry)
 template <class ItemType>
 BinaryNode<ItemType> *BinarySearchTree<ItemType>::removeValue(BinaryNode<ItemType> *subTreePtr,
 															  const ItemType target,
-															  bool &success)
+															  bool &success) //* add your code here
 {
 	if (subTreePtr == nullptr)
 	{
@@ -265,7 +265,7 @@ BinaryNode<ItemType> *BinarySearchTree<ItemType>::removeValue(BinaryNode<ItemTyp
 }
 
 template <class ItemType>
-BinaryNode<ItemType> *BinarySearchTree<ItemType>::removeNode(BinaryNode<ItemType> *nodePtr)
+BinaryNode<ItemType> *BinarySearchTree<ItemType>::removeNode(BinaryNode<ItemType> *nodePtr) //* add your code here
 {
 	if (nodePtr->isLeaf())
 	{
@@ -319,7 +319,7 @@ BinaryNode<ItemType> *BinarySearchTree<ItemType>::removeLeftmostNode(BinaryNode<
 
 template <class ItemType>
 BinaryNode<ItemType> *BinarySearchTree<ItemType>::removeRightmostNode(BinaryNode<ItemType> *nodePtr,
-																	  ItemType &inorderPredecessor, int &newWordCount)
+																	  ItemType &inorderPredecessor, int &newWordCount) //* add your code here
 {
 	if (nodePtr->getRightChildPtr() == nullptr)
 	{
