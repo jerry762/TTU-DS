@@ -1,22 +1,22 @@
-// HW10.cpp : ©w¸q¥D±±¥xÀ³¥Îµ{¦¡ªº¶i¤JÂI¡C
+// HW10.cpp : ï¿½wï¿½qï¿½Dï¿½ï¿½ï¿½xï¿½ï¿½ï¿½Îµ{ï¿½ï¿½ï¿½ï¿½ï¿½iï¿½Jï¿½Iï¿½C
 //
 
-#include "stdafx.h"
 #include "BinaryNodeTree.h"
 
-void display(int& anItem)
+void display(int &anItem)
 {
 	cout << anItem << ' ';
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+int main()
 {
-   BinaryNodeTree<int> tree1, binTree, leftSubtree, rightSubtree; // empty trees
+	BinaryNodeTree<int> tree1, binTree, leftSubtree, rightSubtree; // empty trees
 
-   for ( int i = 1; i < 5; i ++ ) {
-		binTree.add( i + 5 );
+	for (int i = 1; i < 5; i++)
+	{
+		binTree.add(i + 5);
 		cout << "Inorder traversal: ";
-		binTree.inorderTraverse( display );
+		binTree.inorderTraverse(display);
 		cout << endl;
 
 		cout << "Height: " << binTree.getHeight();
@@ -25,9 +25,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		cout << "  HighestFullLevel: " << binTree.getHighestFullLevel() << endl;
 		cout << endl;
 
-		binTree.add( i );
+		binTree.add(i);
 		cout << "Inorder traversal: ";
-		binTree.inorderTraverse( display );
+		binTree.inorderTraverse(display);
 		cout << endl;
 
 		cout << "Height: " << binTree.getHeight();
@@ -35,8 +35,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		cout << "  Maximum: " << binTree.getMaximum();
 		cout << "  HighestFullLevel: " << binTree.getHighestFullLevel() << endl;
 		cout << endl;
-   }
+	}
 
 	return 0;
 }
-

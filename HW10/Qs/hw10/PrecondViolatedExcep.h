@@ -14,8 +14,8 @@ using namespace std;
 class PrecondViolatedExcep : public logic_error
 {
 public:
-   PrecondViolatedExcep(const string& message = "");
-}; // end PrecondViolatedExcep 
+    PrecondViolatedExcep(const string &message = "");
+}; // end PrecondViolatedExcep
 
 //  Created by Frank M. Carrano and Tim Henry.
 //  Copyright (c) 2013 __Pearson Education__. All rights reserved.
@@ -23,12 +23,9 @@ public:
 /** Listing 7-6.
     @file PrecondViolatedExcep.cpp */
 
-PrecondViolatedExcep::PrecondViolatedExcep(const string& message): logic_error("Precondition Violated Exception: " + message)
+PrecondViolatedExcep::PrecondViolatedExcep(const string &message) : logic_error("Precondition Violated Exception: " + message)
 {
-}  // end constructor
+} // end constructor
 #endif
 
 // End of implementation file.
-
-
-
