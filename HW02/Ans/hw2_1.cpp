@@ -62,12 +62,9 @@ int Coef(polynomial p, int expo)
 polynomial Attach(polynomial p, int coef, int expo) //* add your code here
 {
 	if (p.degree < expo)
-	{
 		p.degree = expo;
-		p.coef[expo] = coef;
-	}
-	else
-		p.coef[expo] = coef;
+
+	p.coef[expo] = coef;
 
 	return p;
 }
