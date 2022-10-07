@@ -6,7 +6,7 @@
 #include <string>
 #include <iostream>
 #include "BstPriorityQueue.h"
-#define PQSIZE 5
+#define PQSIZE 100
 
 using namespace std;
 
@@ -28,20 +28,38 @@ void input(string sMessage, string &sInputString)
 
 void pqListInsert(list<string> &pqList, const string item) //* add your code here
 {
+	size_t size = pqList.size();
 
-	// replace the following code with yours
+	for (auto i = pqList.begin(); i != pqList.end(); i++)
+	{
+		if (item <= *i)
+		{
+			pqList.insert(i, item);
+			break;
+		}
+	}
 
-	list<string>::iterator itemIter = pqList.begin();
-	pqList.insert(itemIter, item);
+	if (size == pqList.size())
+		pqList.push_back(item);
 }
 
 void pqArrayInsert(string *pqArray, int &size, const string item) //* add your code here
 {
-
-	// replace the following code with yours
-
 	pqArray[size] = item;
-	++size;
+
+	for (size_t i = 0; i < size; i++)
+	{
+		if (item <= pqArray[i])
+		{
+			for (size_t j = 0; j < size - i; j++)
+			{
+				pqArray[size - j] = pqArray[size - 1 - j];
+			}
+			pqArray[i] = item;
+			break;
+		}
+	}
+	size++;
 }
 
 int main()

@@ -319,20 +319,17 @@ BinaryNode<ItemType> *BinarySearchTree<ItemType>::removeLeftmostNode(BinaryNode<
 template <class ItemType>
 bool BinarySearchTree<ItemType>::findMinimumValue(ItemType &minimumValue) //* add your code here
 {
-
-	// add your code here
-
-	findMinimumNode(rootPtr);
-	return false;
+	minimumValue = findMinimumNode(rootPtr)->getItem();
+	return true;
 }
 
 template <class ItemType>
 BinaryNode<ItemType> *BinarySearchTree<ItemType>::findMinimumNode(BinaryNode<ItemType> *nodePtr) const //* add your code here
 {
+	if (!nodePtr->getLeftChildPtr())
+		return nodePtr;
 
-	// add your code here
-
-	return nullptr;
+	return findMinimumNode(nodePtr->getLeftChildPtr());
 }
 
 #endif
