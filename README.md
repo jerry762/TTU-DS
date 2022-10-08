@@ -38,7 +38,7 @@
 <img src="https://i.imgur.com/WhgAcOv.png" alt="Install" width="400"/>
 
 ```sh
-$ git clone https://github.com/jerry762/TTU-DS.git
+git clone https://github.com/jerry762/TTU-DS.git
 ```
 
 ## Learning Resources:
