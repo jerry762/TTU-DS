@@ -15,7 +15,6 @@ class HashedDictionary
 private:
    HashedEntry<KeyType, ItemType> **hashTable;
    static const int DEFAULT_SIZE = 1;
-   HashedEntry<KeyType, ItemType> *nextPtr;
    int hashTableSize;
 
 public:
@@ -164,34 +163,60 @@ int HashedDictionary<KeyType, ItemType>::getTableSize()
 }
 
 template <class KeyType, class ItemType>
-HashedEntry<KeyType, ItemType> *HashedDictionary<KeyType, ItemType>::getEntry(const KeyType &searchKey)
+HashedEntry<KeyType, ItemType> *HashedDictionary<KeyType, ItemType>::getEntry(const KeyType &searchKey) //* add yor code here
 {
    // Compute the hashed index into the array
    int itemHashIndex = getHashIndex(searchKey);
+   HashedEntry<KeyType, ItemType> *itemPtr = hashTable[itemHashIndex];
 
-   // add yor code here
-
-   return nullptr;
+   while (itemPtr)
+   {
+      if (itemPtr->getKey() == searchKey)
+         break;
+      itemPtr = itemPtr->getNext();
+   }
+   
+   return itemPtr;
 }
 
 template <class KeyType, class ItemType>
-void HashedDictionary<KeyType, ItemType>::clear()
+void HashedDictionary<KeyType, ItemType>::clear() //* add yor code here
 {
-   HashedEntry<KeyType, ItemType> *nextPtr, *curPtr;
+   HashedEntry<KeyType, ItemType> *nextPtr = nullptr;
+   HashedEntry<KeyType, ItemType> *curPtr = nullptr;
 
    for (int i = 0; i < hashTableSize; i++)
    {
       curPtr = hashTable[i];
 
-      // add your code here
+      if (curPtr)
+      {
+         while (curPtr)
+         {
+            nextPtr = curPtr->getNext();
+            delete curPtr;
+            curPtr = nextPtr;
+         }
 
+         hashTable[i] = nullptr;
+      }
    } // end for
 }
 
 template <class KeyType, class ItemType>
-void HashedDictionary<KeyType, ItemType>::traverse(int itemHashIndex, void visit(HashedEntry<KeyType, ItemType> &)) const
+void HashedDictionary<KeyType, ItemType>::traverse(int itemHashIndex, void visit(HashedEntry<KeyType, ItemType> &)) const //* add yor code here
 {
    HashedEntry<KeyType, ItemType> *itemPtr = hashTable[itemHashIndex];
 
-   // add your code here
+   if (itemPtr)
+   {
+      while (itemPtr->getNext())
+      {
+         std::cout << itemPtr->getKey() << '-' << itemPtr->getItem() << "  ";
+         itemPtr = itemPtr->getNext();
+      }
+
+      std::cout << itemPtr->getKey() << '-' << itemPtr->getItem();
+   }
+
 }
