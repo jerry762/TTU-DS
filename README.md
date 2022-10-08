@@ -31,7 +31,7 @@
             - Table
             - Set
 
-## Installation:
+## Download:
 
 下載壓縮檔或使用git 指令複製到本地端  
 
