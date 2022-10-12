@@ -45,8 +45,9 @@ git clone https://github.com/jerry762/TTU-DS.git
 
 ## Learning Resources:
 
-<http://alrightchiu.github.io/SecondRound/mu-lu-yan-suan-fa-yu-zi-liao-jie-gou.html>  
+<a href="http://alrightchiu.github.io/SecondRound/mu-lu-yan-suan-fa-yu-zi-liao-jie-gou.html" target="_blank">http://alrightchiu.github.io/SecondRound/mu-lu-yan-suan-fa-yu-zi-liao-jie-gou.html</a>
 
-<https://web.ntnu.edu.tw/~algo/>
+<a href="https://web.ntnu.edu.tw/~algo/" target="_blank">https://web.ntnu.edu.tw/~algo/</a>
+
 
 
