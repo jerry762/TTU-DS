@@ -77,13 +77,15 @@ bool isPalindromeDeque(deque<char> aDeque) //* add your code here
 
 bool isPalindromeStackQueue(stack<char> aStack, queue<char> aQueue) //* add your code here
 {
-	for (int i = (aQueue.size() / 2) - 1; i >= 0; i--)
+	size_t length = aQueue.size();
+
+	for (int i = 0; i < length / 2; i++)
 	{
 		aStack.push(aQueue.front());
 		aQueue.pop();
 	}
 
-	if ((aQueue.size() + aStack.size()) % 2)
+	if (length % 2)
 		aQueue.pop();
 
 	while (!aStack.empty())
