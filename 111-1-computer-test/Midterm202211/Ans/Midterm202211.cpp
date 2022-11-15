@@ -63,8 +63,8 @@ void doQ2()
 	int coef, expo;
 
 	aArrPoly.clear();
-	bArrPoly.clear(), cArrPoly.clear();
-	;
+	bArrPoly.clear();
+	cArrPoly.clear();
 
 	for (int i = 0; i < MAX_TERMS; i++)
 	{
@@ -142,6 +142,9 @@ void doQ2()
 		cout << "\nMaximum term = ";
 		cLinkPoly.showLinkBasedPolyMaxTerm();
 	}
+	aLinkPoly.clear();
+	bLinkPoly.clear();
+	cLinkPoly.clear();
 }
 // ================ Question 2 Ends Here ==================
 

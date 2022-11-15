@@ -314,13 +314,7 @@ public:
 
 	void copy(LinkedPolynomial &poly) //* add yor code here
 	{
-		while (polynomialTermPtr)
-		{
-			LinkedPolynomialTerm *tempPtr = polynomialTermPtr;
-
-			polynomialTermPtr = polynomialTermPtr->nextTermPtr;
-			delete tempPtr;
-		}
+		clear();
 
 		if (poly.polynomialTermPtr)
 		{
@@ -351,13 +345,7 @@ public:
 
 	void compactCopy(LinkedPolynomial &poly) //* add yor code here
 	{
-		while (polynomialTermPtr)
-		{
-			LinkedPolynomialTerm *tempPtr = polynomialTermPtr;
-
-			polynomialTermPtr = polynomialTermPtr->nextTermPtr;
-			delete tempPtr;
-		}
+		clear();
 
 		while (poly.polynomialTermPtr)
 		{
