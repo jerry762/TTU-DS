@@ -79,20 +79,17 @@ public:
 
 	PolynomialTerm findArrayBasedPolyMaxTerm(int i) //* add yor code here
 	{
-		if (terms[i].expo == 0)
+		if (terms[i + 1].expo == 0)
 			return terms[i];
 
 		PolynomialTerm returnTerm = findArrayBasedPolyMaxTerm(i + 1);
 
 		if (returnTerm.expo < terms[i].expo)
-		{
-			returnTerm.expo = terms[i].expo;
-			returnTerm.coef = terms[i].coef;
-		}
+			return terms[i];
 		else if (returnTerm.expo == terms[i].expo)
 		{
 			if (returnTerm.coef < terms[i].coef)
-				returnTerm.coef = terms[i].coef;
+				return terms[i];
 		}
 
 		return returnTerm;
@@ -259,8 +256,6 @@ public:
 			cout << termPtr->coef;
 		else
 			cout << termPtr->coef << "X^" << termPtr->expo;
-
-		delete termPtr;
 	}
 
 	LinkedPolynomialTerm *findLinkBasedPolyMaxTerm(LinkedPolynomialTerm *currPtr) //* add yor code here
@@ -269,26 +264,16 @@ public:
 			return nullptr;
 
 		if (!currPtr->nextTermPtr)
-		{
-			LinkedPolynomialTerm *tempTerm = new LinkedPolynomialTerm;
-
-			tempTerm->expo = currPtr->expo;
-			tempTerm->coef = currPtr->coef;
-
-			return tempTerm;
-		}
+			return currPtr;
 
 		LinkedPolynomialTerm *returnTerm = findLinkBasedPolyMaxTerm(currPtr->nextTermPtr);
 
 		if (returnTerm->expo < currPtr->expo)
-		{
-			returnTerm->expo = currPtr->expo;
-			returnTerm->coef = currPtr->coef;
-		}
+			return currPtr;
 		else if (returnTerm->expo == currPtr->expo)
 		{
 			if (returnTerm->coef < currPtr->coef)
-				returnTerm->coef = currPtr->coef;
+				return currPtr;
 		}
 
 		return returnTerm;
