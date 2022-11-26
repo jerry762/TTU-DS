@@ -49,4 +49,6 @@ git clone https://github.com/jerry762/TTU-DS.git
 
 <https://web.ntnu.edu.tw/~algo/>
 
+<https://josephjsf2.github.io/>
 
+<https://www.programiz.com/dsa>
