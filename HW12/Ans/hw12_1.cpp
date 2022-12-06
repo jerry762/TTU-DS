@@ -47,14 +47,13 @@ void pqArrayInsert(string *pqArray, int &size, const string item) //* add your c
 {
 	pqArray[size] = item;
 
-	for (size_t i = 0; i < size; i++)
+	for (int i = 0; i < size; i++)
 	{
-		if (item <= pqArray[i])
+		if (item < pqArray[i])
 		{
-			for (size_t j = 0; j < size - i; j++)
-			{
-				pqArray[size - j] = pqArray[size - 1 - j];
-			}
+			for (int j = size - 1; j >= i; j--)
+				pqArray[j + 1] = pqArray[j];
+
 			pqArray[i] = item;
 			break;
 		}
