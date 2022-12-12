@@ -1,0 +1,18 @@
+a jotaro 222
+a joseph 333
+a avdol 444
+a noriaki 555
+a pierre 666
+a iggy 777
+d
+r Dio
+d
+r joseph
+d
+r iggy
+d
+r nor
+d
+c
+d
+x
