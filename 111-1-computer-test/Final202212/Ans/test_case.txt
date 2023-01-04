@@ -31,7 +31,7 @@ a aaaa
 a aaaaa
 a aaaaaa
 d
-
+------------------
 a a 
 a aaaaaa
 a aa
@@ -41,7 +41,7 @@ a a
 a aaa
 a aaaaa
 d
-
+------------------
 r aaa d
 r aaaaa d
 r aaaaaa d
@@ -60,7 +60,7 @@ r aaaaa d
 r aaaa d
 r aaaa d
 x
-
+------------------
 a a
 a a
 a aa
@@ -70,14 +70,13 @@ a a
 a a
 a a
 d
-
-r a
-r aa
-r aa
-r a
-r aaa
-r a
-r a
-r a
-d
+------------------
+r a d
+r aa d
+r aa d
+r a d
+r aaa d
+r a d
+r a d
+r a d
 x
