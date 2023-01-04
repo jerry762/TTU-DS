@@ -171,7 +171,7 @@ HashedEntry<KeyType, ItemType> *HashedDictionary<KeyType, ItemType>::getEntry(co
 
    while (itemPtr)
    {
-      if (itemPtr->getItem() == searchKey)
+      if (itemPtr->getKey() == searchKey)
          break;
       itemPtr = itemPtr->getNext();
    }
