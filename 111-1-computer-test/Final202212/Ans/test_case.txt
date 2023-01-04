@@ -1,9 +1,9 @@
 ================ Q1 ==================
 
 a 3 6 9 4 1 0 8 8 0 9 8 3 1 4 6
-d 6 6 9 4 5 6 8 8 8 3 0 1 3 0 3 3 9 1 4
+r 6 r 6 r 9 r 4 r 5 r 6 r 8 r 8 r 8 r 3 r 0 r 1 r 3 r 0 r 3 r 3 r 9 r 1 r 4
 a 9 9 3
-d 9 9 3
+r 9 r 9 r 3
 
 ================ Q2 ==================
 
@@ -31,7 +31,7 @@ a aaaa
 a aaaaa
 a aaaaaa
 d
----------------
+
 a a 
 a aaaaaa
 a aa
@@ -41,26 +41,26 @@ a a
 a aaa
 a aaaaa
 d
----------------
-r aaa
-r aaaaa
-r aaaaaa
-r aaaaaa
-r aaa
-r aaa
-r aaaaaa
-r aa
-r a
-r aa
-r aa
-r a
-r a
-r a
-r aaaaa
-r aaaa
-r aaaa
-d
----------------
+
+r aaa d
+r aaaaa d
+r aaaaaa d
+r aaaaaa d
+r aaa d
+r aaa d
+r aaaaaa d
+r aa d
+r a d
+r aa d
+r aa d
+r a d
+r a d
+r a d
+r aaaaa d
+r aaaa d
+r aaaa d
+x
+
 a a
 a a
 a aa
@@ -70,7 +70,7 @@ a a
 a a
 a a
 d
----------------
+
 r a
 r aa
 r aa

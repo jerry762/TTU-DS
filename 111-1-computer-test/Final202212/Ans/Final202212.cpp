@@ -229,6 +229,10 @@ void addEdges(int **matrixGraph, int numVertices, int vertexNo)
 		{
 			matrixGraph[vertexNo][i] = 1;
 		}
+		if (i != vertexNo && matrixGraph[i][vertexNo] == INT_MAX)
+		{
+			matrixGraph[i][vertexNo] = 1;
+		}
 	}
 }
 
@@ -239,6 +243,10 @@ void removeEdges(int **matrixGraph, int numVertices, int vertexNo)
 		if (i != vertexNo && matrixGraph[vertexNo][i] != INT_MAX)
 		{
 			matrixGraph[vertexNo][i] = INT_MAX;
+		}
+		if (i != vertexNo && matrixGraph[i][vertexNo] != INT_MAX)
+		{
+			matrixGraph[i][vertexNo] = INT_MAX;
 		}
 	}
 }
