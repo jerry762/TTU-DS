@@ -16,20 +16,19 @@ private:
    KeyType key;
 
 protected:
-   void setKey(const KeyType &searchKey);
-
 public:
    Entry();
    Entry(ItemType newEntry, KeyType searchKey);
    ItemType getItem() const;
    KeyType getKey() const;
    void setItem(const ItemType &newEntry);
+   void setKey(const KeyType &searchKey);
 
    bool operator==(const Entry<KeyType, ItemType> &rightHandItem) const;
    bool operator>(const Entry<KeyType, ItemType> &rightHandItem) const;
 }; // end Entry
 
-#//  Created by Frank M. Carrano and Tim Henry.
+//  Created by Frank M. Carrano and Tim Henry.
 //  Copyright (c) 2013 __Pearson Education__. All rights reserved.
 
 template <class KeyType, class ItemType>

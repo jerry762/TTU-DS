@@ -117,7 +117,7 @@ int HashedDictionary<KeyType, ItemType>::getHashIndex(const KeyType &searchKey)
 template <class KeyType, class ItemType>
 void HashedDictionary<KeyType, ItemType>::add(const KeyType &searchKey, const ItemType &newItem)
 {
-	HashedEntry<string, string> *itemPtr = getEntry(searchKey);
+	HashedEntry<KeyType, ItemType> *itemPtr = getEntry(searchKey);
 	// Compute the hashed index into the array
 	int itemHashIndex = getHashIndex(searchKey);
 
@@ -147,13 +147,16 @@ void HashedDictionary<KeyType, ItemType>::add(const KeyType &searchKey, const It
 		{
 			if (itemPtr->getCount() > curPtr->getCount())
 			{
-				int curCount = curPtr->getCount(), itemCount = itemPtr->getCount();
 				ItemType curValue = curPtr->getItem(), itemValue = itemPtr->getItem();
+				int curCount = curPtr->getCount(), itemCount = itemPtr->getCount();
 
-				curPtr->setCount(itemCount);
+				curPtr->setKey(itemValue);
 				curPtr->setItem(itemValue);
-				itemPtr->setCount(curCount);
+				curPtr->setCount(itemCount);
+
+				itemPtr->setKey(curValue);
 				itemPtr->setItem(curValue);
+				itemPtr->setCount(curCount);
 				break;
 			}
 			curPtr = curPtr->getNext();
@@ -165,7 +168,7 @@ template <class KeyType, class ItemType>
 bool HashedDictionary<KeyType, ItemType>::remove(const KeyType &searchKey)
 {
 	bool itemFound = false;
-	HashedEntry<string, string> *itemPtr = getEntry(searchKey);
+	HashedEntry<KeyType, ItemType> *itemPtr = getEntry(searchKey);
 	// Compute the hashed index into the array
 	int itemHashIndex = getHashIndex(searchKey);
 
@@ -176,7 +179,7 @@ bool HashedDictionary<KeyType, ItemType>::remove(const KeyType &searchKey)
 			HashedEntry<KeyType, ItemType> *curPtr = hashTable[itemHashIndex];
 
 			if (curPtr == itemPtr)
-				hashTable[itemHashIndex] = itemPtr->getNext();
+				hashTable[itemHashIndex] = curPtr->getNext();
 			else
 			{
 				while (curPtr->getNext() != itemPtr)
@@ -204,13 +207,16 @@ bool HashedDictionary<KeyType, ItemType>::remove(const KeyType &searchKey)
 
 			if (prevPtr)
 			{
-				int prevCount = prevPtr->getCount(), itemCount = itemPtr->getCount();
 				ItemType prevValue = prevPtr->getItem(), itemValue = itemPtr->getItem();
+				int prevCount = prevPtr->getCount(), itemCount = itemPtr->getCount();
 
-				prevPtr->setCount(itemCount);
+				prevPtr->setKey(itemValue);
 				prevPtr->setItem(itemValue);
-				itemPtr->setCount(prevCount);
+				prevPtr->setCount(itemCount);
+
+				itemPtr->setKey(prevValue);
 				itemPtr->setItem(prevValue);
+				itemPtr->setCount(prevCount);
 			}
 		}
 		itemFound = true;
@@ -231,12 +237,11 @@ HashedEntry<KeyType, ItemType> *HashedDictionary<KeyType, ItemType>::getEntry(co
 
 	while (curPtr)
 	{
-		if (curPtr->getItem() == searchKey)
+		if (curPtr->getKey() == searchKey)
 		{
 			itemFound = true;
 			break;
 		}
-
 		curPtr = curPtr->getNext();
 	}
 

@@ -59,7 +59,6 @@ r a d
 r aaaaa d
 r aaaa d
 r aaaa d
-x
 ------------------
 a a
 a a
