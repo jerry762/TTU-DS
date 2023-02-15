@@ -1,8 +1,8 @@
 // HW0.cpp : �w�q�D���x���ε{�����i�J�I�C
 //
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include <iostream>
 
 using namespace std;
