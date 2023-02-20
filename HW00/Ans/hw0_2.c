@@ -58,26 +58,19 @@ int main(void)
             {
                 if (arr[i] == num)
                 {
-                    size_t delNum = 1;
+                    size_t delNum = 0;
 
-                    for (size_t j = i + 1; j < len; j++)
+                    for (size_t j = i; j < len; j++)
                     {
                         if (arr[j] == num)
                             delNum++;
                         else
-                        {
-                            for (size_t k = 0; k < len - delNum - i; k++)
-                            {
-                                arr[i + k] = arr[j + k];
-                            }
-                            break;
-                        }
+                            arr[i++] = arr[j];
                     }
                     len -= delNum;
                     break;
                 }
             }
-
             printArr(arr, len);
         }
         break;
