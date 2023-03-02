@@ -124,34 +124,37 @@ string removeR(string s) //* add your code here
 
 int TI(int m, int n) //* add your code here
 {
-	int value = 0;
+	const int temp = (n < 0) ? -n : n;
+	int sum = 0;
 
-	for (int i = 0; i < abs(n); i++)
-		value += abs(m);
+	for (size_t i = 0; i < temp; i++)
+		sum += m;
 
-	if ((m < 0 || n < 0) && !(m < 0 && n < 0))
-		value *= -1;
+	if (n < 0)
+		sum *= -1;
 
-	return value;
+	return sum;
 }
 
 int TR(int m, int n) //* add your code here
 {
-	if (n == 0 || m == 0)
+	if (m == 0 || n == 0)
 		return 0;
 
-	if (n == 1)
-		return m;
-
-	if (m * n < 0)
+	if ((m < 0 && n < 0) || (m > 0 && n > 0))
 	{
 		if (n < 0)
-			swap(m, n);
-
-		return TR(m, n - 1) + m;
+			return TR(m, n + 1) - m;
+		else
+			return TR(m, n - 1) + m;
 	}
 	else
-		return TR(abs(m), abs(n) - 1) + abs(m);
+	{
+		if (n < 0)
+			return TR(m, n + 1) - m;
+		else
+			return TR(m, n - 1) + m;
+	}
 }
 
 int main()
