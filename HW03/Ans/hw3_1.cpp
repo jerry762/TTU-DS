@@ -70,7 +70,6 @@ void inputTerm(polynomialTerm t[], int coef, int expo) //* add your code here
 
 			t[i].expo = expo;
 			t[i].coef = coef;
-
 			break;
 		}
 		else if (expo == t[i].expo)
