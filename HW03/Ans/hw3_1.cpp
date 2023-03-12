@@ -47,24 +47,19 @@ void printArrayBasedPoly(polynomialTerm t[])
 
 void inputTerm(polynomialTerm t[], int coef, int expo) //* add your code here
 {
+	int size = 0;
+
 	if (coef == 0)
 		return;
-
-	int size = 0;
 
 	for (int i = 0; i < MAX_TERMS; i++)
 	{
 		if (t[i].coef != 0)
-		{
 			size++;
-		}
 	}
 
 	t[size].expo = expo;
 	t[size].coef = coef;
-
-	if (size == 0)
-		return;
 
 	for (int i = 0; i < size; i++)
 	{
