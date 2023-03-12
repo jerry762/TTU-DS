@@ -45,24 +45,19 @@ void clear(linkedPolynomialTerm *&polynomialTermPtr)
 
 void inputTerms(polynomialTerm terms[], int coef, int expo) //* add your code here
 {
+	int size = 0;
+
 	if (coef == 0)
 		return;
-
-	int size = 0;
 
 	for (int i = 0; i < MAX_TERMS; i++)
 	{
 		if (terms[i].coef != 0)
-		{
 			size++;
-		}
 	}
 
 	terms[size].expo = expo;
 	terms[size].coef = coef;
-
-	if (size == 0)
-		return;
 
 	for (int i = 0; i < size; i++)
 	{
@@ -73,7 +68,6 @@ void inputTerms(polynomialTerm terms[], int coef, int expo) //* add your code he
 
 			terms[i].expo = expo;
 			terms[i].coef = coef;
-
 			break;
 		}
 		else if (expo == terms[i].expo)
@@ -187,42 +181,39 @@ void addArrayBasedPoly(polynomialTerm a[], polynomialTerm b[], polynomialTerm d[
 linkedPolynomialTerm *addLinkBasedPoly(linkedPolynomialTerm *aPtr, linkedPolynomialTerm *bPtr) //* add your code here
 {
 	linkedPolynomialTerm *dPtr = nullptr;
-
-	linkedPolynomialTerm *pointA = aPtr;
-	linkedPolynomialTerm *pointB = bPtr;
 	linkedPolynomialTerm *pointD = dPtr;
 
-	while (pointA && pointB)
+	while (aPtr && bPtr)
 	{
 		linkedPolynomialTerm *newNode = new linkedPolynomialTerm;
 
 		newNode->nextTermPtr = nullptr;
 
-		if (pointA->expo > pointB->expo)
+		if (aPtr->expo > bPtr->expo)
 		{
-			newNode->expo = pointA->expo;
-			newNode->coef = pointA->coef;
-			pointA = pointA->nextTermPtr;
+			newNode->expo = aPtr->expo;
+			newNode->coef = aPtr->coef;
+			aPtr = aPtr->nextTermPtr;
 		}
-		else if (pointA->expo < pointB->expo)
+		else if (aPtr->expo < bPtr->expo)
 		{
-			newNode->expo = pointB->expo;
-			newNode->coef = pointB->coef;
-			pointB = pointB->nextTermPtr;
+			newNode->expo = bPtr->expo;
+			newNode->coef = bPtr->coef;
+			bPtr = bPtr->nextTermPtr;
 		}
 		else
 		{
-			if (pointA->coef + pointB->coef == 0)
+			if (aPtr->coef + bPtr->coef == 0)
 			{
-				pointA = pointA->nextTermPtr;
-				pointB = pointB->nextTermPtr;
+				aPtr = aPtr->nextTermPtr;
+				bPtr = bPtr->nextTermPtr;
 				delete newNode;
 				continue;
 			}
-			newNode->expo = pointA->expo;
-			newNode->coef = pointA->coef + pointB->coef;
-			pointA = pointA->nextTermPtr;
-			pointB = pointB->nextTermPtr;
+			newNode->expo = aPtr->expo;
+			newNode->coef = aPtr->coef + bPtr->coef;
+			aPtr = aPtr->nextTermPtr;
+			bPtr = bPtr->nextTermPtr;
 		}
 
 		if (!dPtr)
@@ -237,12 +228,12 @@ linkedPolynomialTerm *addLinkBasedPoly(linkedPolynomialTerm *aPtr, linkedPolynom
 		}
 	}
 
-	while (pointA)
+	while (aPtr)
 	{
 		linkedPolynomialTerm *newNode = new linkedPolynomialTerm;
 
-		newNode->expo = pointA->expo;
-		newNode->coef = pointA->coef;
+		newNode->expo = aPtr->expo;
+		newNode->coef = aPtr->coef;
 		newNode->nextTermPtr = nullptr;
 
 		if (!dPtr)
@@ -255,15 +246,15 @@ linkedPolynomialTerm *addLinkBasedPoly(linkedPolynomialTerm *aPtr, linkedPolynom
 			pointD->nextTermPtr = newNode;
 			pointD = pointD->nextTermPtr;
 		}
-		pointA = pointA->nextTermPtr;
+		aPtr = aPtr->nextTermPtr;
 	}
 
-	while (pointB)
+	while (bPtr)
 	{
 		linkedPolynomialTerm *newNode = new linkedPolynomialTerm;
 
-		newNode->expo = pointB->expo;
-		newNode->coef = pointB->coef;
+		newNode->expo = bPtr->expo;
+		newNode->coef = bPtr->coef;
 		newNode->nextTermPtr = nullptr;
 
 		if (!dPtr)
@@ -276,7 +267,7 @@ linkedPolynomialTerm *addLinkBasedPoly(linkedPolynomialTerm *aPtr, linkedPolynom
 			pointD->nextTermPtr = newNode;
 			pointD = pointD->nextTermPtr;
 		}
-		pointB = pointB->nextTermPtr;
+		bPtr = bPtr->nextTermPtr;
 	}
 
 	return dPtr;
