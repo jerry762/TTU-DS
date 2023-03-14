@@ -49,24 +49,24 @@ void inputTerm(polynomialTerm t[], int coef, int expo) //* add your code here
 {
 	int size = 0;
 
-	if (coef == 0)
-		return;
-
 	for (int i = 0; i < MAX_TERMS; i++)
 	{
 		if (t[i].coef != 0)
 			size++;
 	}
 
-	t[size].expo = expo;
-	t[size].coef = coef;
+	if (coef != 0)
+	{
+		t[size].expo = expo;
+		t[size].coef = coef;
+	}
 
 	for (int i = 0; i < size; i++)
 	{
-		if (expo > t[i].expo)
+		if (expo > t[i].expo && coef != 0)
 		{
-			for (int j = 0; j < size - i; j++)
-				t[size - j] = t[size - 1 - j];
+			for (int j = size - 1; j >= i; j--)
+				t[j + 1] = t[j];
 
 			t[i].expo = expo;
 			t[i].coef = coef;
@@ -74,9 +74,17 @@ void inputTerm(polynomialTerm t[], int coef, int expo) //* add your code here
 		}
 		else if (expo == t[i].expo)
 		{
-			t[i].coef = coef;
-			t[size].expo = 0;
-			t[size].coef = 0;
+			if (coef == 0)
+			{
+				for (int j = i; j < size; j++)
+					t[j] = t[j + 1];
+			}
+			else
+			{
+				t[i].coef = coef;
+				t[size].expo = 0;
+				t[size].coef = 0;
+			}
 			break;
 		}
 	}
