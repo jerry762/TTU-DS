@@ -47,24 +47,24 @@ void inputTerms(polynomialTerm terms[], int coef, int expo) //* add your code he
 {
 	int size = 0;
 
-	if (coef == 0)
-		return;
-
 	for (int i = 0; i < MAX_TERMS; i++)
 	{
 		if (terms[i].coef != 0)
 			size++;
 	}
 
-	terms[size].expo = expo;
-	terms[size].coef = coef;
+	if (coef != 0)
+	{
+		terms[size].expo = expo;
+		terms[size].coef = coef;
+	}
 
 	for (int i = 0; i < size; i++)
 	{
-		if (expo > terms[i].expo)
+		if (expo > terms[i].expo && coef != 0)
 		{
-			for (int j = 0; j < size - i; j++)
-				terms[size - j] = terms[size - 1 - j];
+			for (int j = size - 1; j >= i; j--)
+				terms[j + 1] = terms[j];
 
 			terms[i].expo = expo;
 			terms[i].coef = coef;
@@ -72,9 +72,17 @@ void inputTerms(polynomialTerm terms[], int coef, int expo) //* add your code he
 		}
 		else if (expo == terms[i].expo)
 		{
-			terms[i].coef = coef;
-			terms[size].expo = 0;
-			terms[size].coef = 0;
+			if (coef == 0)
+			{
+				for (int j = i; j < size; j++)
+					terms[j] = terms[j + 1];
+			}
+			else
+			{
+				terms[i].coef = coef;
+				terms[size].expo = 0;
+				terms[size].coef = 0;
+			}
 			break;
 		}
 	}
@@ -82,14 +90,16 @@ void inputTerms(polynomialTerm terms[], int coef, int expo) //* add your code he
 
 void inputLinkTerms(linkedPolynomialTerm *&polyPtr, int coef, int expo) //* add your code here
 {
-	if (coef == 0)
-		return;
+	linkedPolynomialTerm *newNode = nullptr;
 
-	linkedPolynomialTerm *newNode = new linkedPolynomialTerm;
-
-	newNode->expo = expo;
-	newNode->coef = coef;
-	newNode->nextTermPtr = nullptr;
+	if (coef != 0)
+	{
+		newNode = new linkedPolynomialTerm;
+		
+		newNode->expo = expo;
+		newNode->coef = coef;
+		newNode->nextTermPtr = nullptr;
+	}
 
 	if (!polyPtr)
 		polyPtr = newNode;
@@ -100,7 +110,7 @@ void inputLinkTerms(linkedPolynomialTerm *&polyPtr, int coef, int expo) //* add 
 
 		while (currNode)
 		{
-			if (expo > currNode->expo)
+			if (expo > currNode->expo && coef != 0)
 			{
 				if (currNode == polyPtr)
 					polyPtr = newNode;
@@ -112,8 +122,19 @@ void inputLinkTerms(linkedPolynomialTerm *&polyPtr, int coef, int expo) //* add 
 			}
 			else if (expo == currNode->expo)
 			{
-				currNode->coef = coef;
-				delete newNode;
+				if (coef == 0)
+				{
+					if (currNode == polyPtr)
+						polyPtr = currNode->nextTermPtr;
+					else
+						prevNode->nextTermPtr = currNode->nextTermPtr;
+					delete currNode;
+				}
+				else
+				{
+					currNode->coef = coef;
+					delete newNode;
+				}
 				break;
 			}
 			prevNode = currNode;
