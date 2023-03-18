@@ -33,42 +33,44 @@ public:
 
 	void inputTerms(int coef, int expo) //* add your code here
 	{
-		if (coef == 0)
-			return;
-
 		int size = 0;
 
 		for (int i = 0; i < MAX_TERMS; i++)
 		{
 			if (terms[i].coef != 0)
-			{
 				size++;
-			}
 		}
 
-		terms[size].expo = expo;
-		terms[size].coef = coef;
-
-		if (size == 0)
-			return;
+		if (coef != 0)
+		{
+			terms[size].expo = expo;
+			terms[size].coef = coef;
+		}
 
 		for (int i = 0; i < size; i++)
 		{
-			if (expo > terms[i].expo)
+			if (expo > terms[i].expo && coef != 0)
 			{
-				for (int j = 0; j < size - i; j++)
-					terms[size - j] = terms[size - 1 - j];
+				for (int j = size - 1; j >= i; j--)
+					terms[j + 1] = terms[j];
 
 				terms[i].expo = expo;
 				terms[i].coef = coef;
-
 				break;
 			}
 			else if (expo == terms[i].expo)
 			{
-				terms[i].coef = coef;
-				terms[size].expo = 0;
-				terms[size].coef = 0;
+				if (coef == 0)
+				{
+					for (int j = i; j < size; j++)
+						terms[j] = terms[j + 1];
+				}
+				else
+				{
+					terms[i].coef = coef;
+					terms[size].expo = 0;
+					terms[size].coef = 0;
+				}
 				break;
 			}
 		}
@@ -215,14 +217,16 @@ public:
 
 	void inputLinkTerms(int coef, int expo) //* add your code here
 	{
-		if (coef == 0)
-			return;
+		LinkedPolynomialTerm *newNode = nullptr;
 
-		LinkedPolynomialTerm *newNode = new LinkedPolynomialTerm;
+		if (coef != 0)
+		{
+			newNode = new LinkedPolynomialTerm;
 
-		newNode->expo = expo;
-		newNode->coef = coef;
-		newNode->nextTermPtr = nullptr;
+			newNode->expo = expo;
+			newNode->coef = coef;
+			newNode->nextTermPtr = nullptr;
+		}
 
 		if (!polynomialTermPtr)
 			polynomialTermPtr = newNode;
@@ -233,7 +237,7 @@ public:
 
 			while (currNode)
 			{
-				if (expo > currNode->expo)
+				if (expo > currNode->expo && coef != 0)
 				{
 					if (currNode == polynomialTermPtr)
 						polynomialTermPtr = newNode;
@@ -245,8 +249,19 @@ public:
 				}
 				else if (expo == currNode->expo)
 				{
-					currNode->coef = coef;
-					delete newNode;
+					if (coef == 0)
+					{
+						if (currNode == polynomialTermPtr)
+							polynomialTermPtr = currNode->nextTermPtr;
+						else
+							prevNode->nextTermPtr = currNode->nextTermPtr;
+						delete currNode;
+					}
+					else
+					{
+						currNode->coef = coef;
+						delete newNode;
+					}
 					break;
 				}
 				prevNode = currNode;
