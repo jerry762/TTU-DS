@@ -137,11 +137,14 @@ void inputLinkTerms(linkedPolynomialTerm *&polyPtr, int coef, int expo) //* add 
 				}
 				break;
 			}
+			else if (!currNode->nextTermPtr)
+			{
+				currNode->nextTermPtr = newNode;
+				break;
+			}
 			prevNode = currNode;
 			currNode = currNode->nextTermPtr;
 		}
-		if (!currNode)
-			prevNode->nextTermPtr = newNode;
 	}
 }
 
