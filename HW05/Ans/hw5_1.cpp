@@ -168,9 +168,9 @@ public:
 		return;
 	}
 
-	int compute(int x) //* add your code here
+	double compute(int x) //* add your code here
 	{
-		int sum = 0;
+		double sum = 0;
 		int size = 0;
 
 		for (int i = 0; i < MAX_TERMS; i++)
@@ -182,7 +182,10 @@ public:
 		}
 
 		for (int i = 0; i < size; i++)
-			sum += terms[i].coef * pow(x, terms[i].expo);
+		{
+			if (terms[i].expo >= 0 || x != 0)
+				sum += terms[i].coef * pow(x, terms[i].expo);
+		}
 
 		return sum;
 	}
@@ -264,11 +267,14 @@ public:
 					}
 					break;
 				}
+				else if (!currNode->nextTermPtr)
+				{
+					currNode->nextTermPtr = newNode;
+					break;
+				}
 				prevNode = currNode;
 				currNode = currNode->nextTermPtr;
 			}
-			if (!currNode)
-				prevNode->nextTermPtr = newNode;
 		}
 	}
 
@@ -417,15 +423,17 @@ public:
 		return;
 	}
 
-	int compute(int x) //* add your code here
+	double compute(int x) //* add your code here
 	{
-		int sum = 0;
+		double sum = 0;
 
 		LinkedPolynomialTerm *currNode = polynomialTermPtr;
 
 		while (currNode)
 		{
-			sum += currNode->coef * pow(x, currNode->expo);
+			if (currNode->expo >= 0 || x != 0)
+				sum += currNode->coef * pow(x, currNode->expo);
+
 			currNode = currNode->nextTermPtr;
 		}
 
