@@ -183,9 +183,20 @@ public:
 
 		for (int i = 0; i < size; i++)
 		{
-			if (terms[i].expo >= 0 || x != 0)
-				sum += terms[i].coef * pow(x, terms[i].expo);
+			double product = 1;
+
+			for (int j = 0; j < abs(terms[i].expo); j++)
+			{
+				if (terms[i].expo > 0)
+					product *= x;
+				else
+					product /= x;
+			}
+			sum += terms[i].coef * product;
 		}
+
+		// for (int i = 0; i < size; i++)
+		// 	sum += terms[i].coef * pow(x, terms[i].expo);
 
 		return sum;
 	}
@@ -431,11 +442,25 @@ public:
 
 		while (currNode)
 		{
-			if (currNode->expo >= 0 || x != 0)
-				sum += currNode->coef * pow(x, currNode->expo);
+			double product = 1;
 
+			for (int i = 0; i < abs(currNode->expo); i++)
+			{
+				if (currNode->expo > 0)
+					product *= x;
+				else
+					product /= x;
+			}
+			sum += currNode->coef * product;
 			currNode = currNode->nextTermPtr;
 		}
+
+		// while (currNode)
+		// {
+		// 	sum += currNode->coef * pow(x, currNode->expo);
+
+		// 	currNode = currNode->nextTermPtr;
+		// }
 
 		return sum;
 	}
