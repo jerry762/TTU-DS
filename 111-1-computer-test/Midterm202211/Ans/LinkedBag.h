@@ -132,7 +132,7 @@ void LinkedBag<ItemType>::addOrRemove(const ItemType &anEntry) //* add yor code 
 
 	if (find)
 	{
-		Node<ItemType> *previPtr = nullptr;
+		Node<ItemType> *prevPtr = nullptr;
 		currPtr = headPtr;
 
 		while (currPtr)
@@ -146,14 +146,14 @@ void LinkedBag<ItemType>::addOrRemove(const ItemType &anEntry) //* add yor code 
 			}
 			else if (anEntry == currPtr->getItem())
 			{
-				previPtr->setNext(currPtr->getNext());
+				prevPtr->setNext(currPtr->getNext());
 				delete currPtr;
-				currPtr = previPtr->getNext();
+				currPtr = prevPtr->getNext();
 				itemCount--;
 			}
 			else
 			{
-				previPtr = currPtr;
+				prevPtr = currPtr;
 				currPtr = currPtr->getNext();
 			}
 		}
