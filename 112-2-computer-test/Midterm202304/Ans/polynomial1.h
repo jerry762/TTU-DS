@@ -1,0 +1,306 @@
+#include <iostream>
+using namespace std;
+
+#define MAX_TERMS 10 /*size of terms array*/
+
+class PolynomialTerm
+{
+public:
+	int coef;
+	int expo;
+};
+
+class ArrayPolynomial
+{
+public:
+	PolynomialTerm terms[MAX_TERMS];
+
+	void clear() /////
+	{
+		for (int i = 0; i < MAX_TERMS; i++)
+		{
+			terms[i].coef = 0;
+			terms[i].expo = 0;
+		}
+
+		return;
+	}
+
+	void inputArrayBasedTerms(int coef, int expo)
+	{
+		// modify the following code and add your code here
+		int i = 0;
+
+		for (; terms[i].coef != 0 && i < MAX_TERMS; i++)
+			;
+
+		terms[i].coef = coef;
+		terms[i].expo = expo;
+
+		return;
+	}
+
+	void printArrayBasedPoly()
+	{
+		if (terms[0].coef == 0)
+			return;
+
+		if (terms[0].expo == 0)
+			cout << terms[0].coef;
+		else
+			cout << terms[0].coef << "X^" << terms[0].expo;
+
+		for (int i = 1; i < MAX_TERMS; i++)
+		{
+			if (terms[i].coef == 0)
+				return;
+
+			if (terms[i].expo == 0)
+				cout << " + " << terms[i].coef;
+			else
+				cout << " + " << terms[i].coef << "X^" << terms[i].expo;
+		}
+
+		return;
+	}
+
+	void arrayBasedReverse() //* add yor code here
+	{
+		size_t size = 0;
+
+		for (size_t i = 0; i < MAX_TERMS; i++)
+		{
+			if (terms[i].coef != 0)
+				size++;
+		}
+
+		for (size_t i = 0; i < size / 2; i++)
+			swap(terms[i], terms[size - 1 - i]);
+	}
+
+	void arrayBasedDifferentiation() //* add yor code here
+	{
+		size_t size = 0;
+
+		for (size_t i = 0; i < MAX_TERMS; i++)
+		{
+			if (terms[i].coef != 0)
+				size++;
+		}
+
+		for (size_t i = 0; i < size; i++)
+		{
+			terms[i].coef = terms[i].coef * terms[i].expo;
+			terms[i].expo = terms[i].expo - 1;
+
+			if (terms[i].coef == 0)
+			{
+				for (size_t j = i; j < size - 1; j++)
+					terms[j] = terms[j + 1];
+
+				terms[size - 1].coef = 0;
+				terms[size - 1].expo = 0;
+				size--;
+				i--;
+			}
+		}
+	}
+
+	int computeI(int x) //* add yor code here
+	{
+		int sum = 0;
+
+		for (size_t i = 0; i < MAX_TERMS; i++)
+		{
+			if (terms[i].coef == 0)
+				break;
+
+			int product = 1;
+
+			for (size_t j = 0; j < terms[i].expo; j++)
+				product *= x;
+
+			sum += terms[i].coef * product;
+		}
+		return sum;
+	}
+
+	int computeR(int x)
+	{
+		return computeR(x, 0);
+	}
+
+	int computeR(int x, int index) //* add yor code here
+	{
+		if (index == MAX_TERMS || terms[index].coef == 0)
+			return 0;
+
+		int product = 1;
+
+		for (size_t i = 0; i < terms[index].expo; i++)
+			product *= x;
+
+		return terms[index].coef * product + computeR(x, index + 1);
+	}
+};
+
+class LinkedPolynomialTerm
+{
+public:
+	int coef;
+	int expo;
+	LinkedPolynomialTerm *nextTermPtr;
+};
+
+class LinkedPolynomial
+{
+public:
+	LinkedPolynomialTerm *polynomialTermPtr = nullptr;
+
+	void clear()
+	{
+		LinkedPolynomialTerm *tmpPtr;
+
+		while (polynomialTermPtr != nullptr)
+		{
+			tmpPtr = polynomialTermPtr;
+			polynomialTermPtr = polynomialTermPtr->nextTermPtr;
+			delete tmpPtr;
+		}
+
+		return;
+	}
+
+	void inputLinkBasedTerms(int coef, int expo)
+	{
+		LinkedPolynomialTerm *tmpPtr;
+
+		tmpPtr = new LinkedPolynomialTerm;
+		tmpPtr->coef = coef;
+		tmpPtr->expo = expo;
+		tmpPtr->nextTermPtr = polynomialTermPtr;
+
+		polynomialTermPtr = tmpPtr;
+
+		return;
+	}
+
+	void printLinkBasedPoly()
+	{
+		LinkedPolynomialTerm *termPtr = polynomialTermPtr;
+
+		if (termPtr == nullptr)
+			return;
+
+		if (termPtr->expo == 0)
+			cout << termPtr->coef;
+		else
+			cout << termPtr->coef << "X^" << termPtr->expo;
+
+		termPtr = termPtr->nextTermPtr;
+
+		while (termPtr != nullptr)
+		{
+			if (termPtr->coef == 0)
+				return;
+
+			if (termPtr->expo == 0)
+				cout << " + " << termPtr->coef;
+			else
+				cout << " + " << termPtr->coef << "X^" << termPtr->expo;
+
+			termPtr = termPtr->nextTermPtr;
+		}
+
+		return;
+	}
+
+	void linkBasedReverse() //* add yor code here
+	{
+		if (!polynomialTermPtr || !polynomialTermPtr->nextTermPtr)
+			return;
+
+		LinkedPolynomialTerm *prevNode = nullptr;
+		LinkedPolynomialTerm *currNode = polynomialTermPtr;
+		LinkedPolynomialTerm *postNode = polynomialTermPtr->nextTermPtr;
+
+		while (postNode)
+		{
+			currNode->nextTermPtr = prevNode;
+			prevNode = currNode;
+			currNode = postNode;
+			postNode = postNode->nextTermPtr;
+		}
+
+		currNode->nextTermPtr = prevNode;
+		polynomialTermPtr = currNode;
+	}
+
+	void linkBasedDifferentiation() //* add yor code here
+	{
+		LinkedPolynomialTerm *currNode = polynomialTermPtr;
+		LinkedPolynomialTerm *prevNode = nullptr;
+
+		while (currNode)
+		{
+			currNode->coef = currNode->coef * currNode->expo;
+			currNode->expo = currNode->expo - 1;
+
+			if (currNode->coef == 0)
+			{
+				if (currNode == polynomialTermPtr)
+				{
+					polynomialTermPtr = currNode->nextTermPtr;
+					delete currNode;
+					currNode = polynomialTermPtr;
+				}
+				else
+				{
+					prevNode->nextTermPtr = currNode->nextTermPtr;
+					delete currNode;
+					currNode = prevNode->nextTermPtr;
+				}
+				continue;
+			}
+			prevNode = currNode;
+			currNode = currNode->nextTermPtr;
+		}
+	}
+
+	int computeI(int x) //* add yor code here
+	{
+		int sum = 0;
+
+		LinkedPolynomialTerm *currNode = polynomialTermPtr;
+
+		while (currNode)
+		{
+			int product = 1;
+
+			for (size_t i = 0; i < currNode->expo; i++)
+				product *= x;
+
+			sum += currNode->coef * product;
+			currNode = currNode->nextTermPtr;
+		}
+		return sum;
+	}
+
+	int computeR(int x)
+	{
+		return computeR(x, polynomialTermPtr);
+	}
+
+	int computeR(int x, LinkedPolynomialTerm *currPtr) //* add yor code here
+	{
+		if (!currPtr)
+			return 0;
+
+		int product = 1;
+
+		for (size_t i = 0; i < currPtr->expo; i++)
+			product *= x;
+
+		return currPtr->coef * product + computeR(x, currPtr->nextTermPtr);
+	}
+};
