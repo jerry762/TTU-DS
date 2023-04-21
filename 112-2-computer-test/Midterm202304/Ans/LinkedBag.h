@@ -152,6 +152,7 @@ bool LinkedBag<ItemType>::remove(const LinkedBag<ItemType> *aBag) //* add yor co
 					delete iCurrNode;
 					iCurrNode = prevNode->getNext();
 				}
+				itemCount--;
 				continue;
 			}
 			prevNode = iCurrNode;
