@@ -129,35 +129,35 @@ bool LinkedBag<ItemType>::remove(const ItemType &anEntry)
 template <class ItemType>
 bool LinkedBag<ItemType>::remove(const LinkedBag<ItemType> *aBag) //* add yor code here
 {
-	Node<ItemType> *ocurrNode = aBag->headPtr;
+	Node<ItemType> *oCurrNode = aBag->headPtr;
 
-	while (ocurrNode)
+	while (oCurrNode)
 	{
-		Node<ItemType> *icurrNode = headPtr;
+		Node<ItemType> *iCurrNode = headPtr;
 		Node<ItemType> *prevNode = nullptr;
 
-		while (icurrNode)
+		while (iCurrNode)
 		{
-			if (ocurrNode->getItem() == icurrNode->getItem())
+			if (oCurrNode->getItem() == iCurrNode->getItem())
 			{
-				if (icurrNode == headPtr)
+				if (iCurrNode == headPtr)
 				{
-					headPtr = icurrNode->getNext();
-					delete icurrNode;
-					icurrNode = headPtr;
+					headPtr = iCurrNode->getNext();
+					delete iCurrNode;
+					iCurrNode = headPtr;
 				}
 				else
 				{
-					prevNode->setNext(icurrNode->getNext());
-					delete icurrNode;
-					icurrNode = prevNode->getNext();
+					prevNode->setNext(iCurrNode->getNext());
+					delete iCurrNode;
+					iCurrNode = prevNode->getNext();
 				}
 				continue;
 			}
-			prevNode = icurrNode;
-			icurrNode = icurrNode->getNext();
+			prevNode = iCurrNode;
+			iCurrNode = iCurrNode->getNext();
 		}
-		ocurrNode = ocurrNode->getNext();
+		oCurrNode = oCurrNode->getNext();
 	}
 
 	return false;
