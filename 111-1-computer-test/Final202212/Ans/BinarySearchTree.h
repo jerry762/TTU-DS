@@ -371,12 +371,11 @@ void BinarySearchTree<ItemType>::mirrorTree(BinaryNode<ItemType> *subtreePtr)
 	if (subtreePtr == nullptr)
 		return;
 
-	BinaryNode<ItemType> *tempLeftPtr = subtreePtr->getLeftChildPtr();
-	BinaryNode<ItemType> *tempRightPtr = subtreePtr->getRightChildPtr();
+	BinaryNode<ItemType> *temp = subtreePtr->getLeftChildPtr();
 
-	subtreePtr->setLeftChildPtr(tempRightPtr);
-	subtreePtr->setRightChildPtr(tempLeftPtr);
-
+	subtreePtr->setLeftChildPtr(subtreePtr->getRightChildPtr());
+	subtreePtr->setRightChildPtr(temp);
+	
 	mirrorTree(subtreePtr->getLeftChildPtr());
 	mirrorTree(subtreePtr->getRightChildPtr());
 
