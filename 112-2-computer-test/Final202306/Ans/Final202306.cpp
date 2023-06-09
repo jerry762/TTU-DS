@@ -218,7 +218,7 @@ int findMinimumWeight(int **matrixGraph, int numVertices) //* add your code here
 
 void updateWeight(int **matrixGraph, int numVertices, int vertexNo1, int vertexNo2, int weight) //* add your code here
 {
-	if (vertexNo1 != vertexNo2)
+	if (vertexNo1 != vertexNo2 && vertexNo1 < numVertices && vertexNo2 < numVertices)
 	{
 		matrixGraph[vertexNo1][vertexNo2] = weight;
 		matrixGraph[vertexNo2][vertexNo1] = weight;
@@ -228,7 +228,7 @@ void updateWeight(int **matrixGraph, int numVertices, int vertexNo1, int vertexN
 
 void removeEdge(int **matrixGraph, int numVertices, int vertexNo1, int vertexNo2) //* add your code here
 {
-	if (vertexNo1 != vertexNo2)
+	if (vertexNo1 != vertexNo2 && vertexNo1 < numVertices && vertexNo2 < numVertices)
 	{
 		matrixGraph[vertexNo1][vertexNo2] = INT_MAX;
 		matrixGraph[vertexNo2][vertexNo1] = INT_MAX;
