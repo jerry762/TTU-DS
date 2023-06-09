@@ -1,0 +1,32 @@
+================ Q1 ==================
+
+A aaa bbb ccc aaa bbb aaa ccc ccc bbb aa a bb c cc aa b bb cc d
+
+R R R R R R R R R R R R R R R R R R R R
+
+================ Q2 ==================
+
+C M R 0 1 U 6 7 13 U 6 4 2 U 7 6 1 R 4 6 R 7 6
+
+================ Q3 ==================
+
+A 18 10 7 15 27 19 36 0
+
+N
+
+T 18 T 10 T 27 T 7 T 1
+
+-----------------------------
+
+A 18 10 7 15 27 19 36 13 21 11 14 20 0
+
+N
+
+T 18 T 19 T 15 T 10 T 1 T 13 T 20
+
+================ Q4 ==================
+
+A a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z
+
+R n R c R c R y R y R n R n R u R u R j R j R j R m R m R b R x R x R b
+
