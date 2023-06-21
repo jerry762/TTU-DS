@@ -121,23 +121,81 @@ void HashedDictionary<KeyType, ItemType>::add(const KeyType &searchKey, const It
 	// Compute the hashed index into the array
 	int itemHashIndex = getHashIndex(searchKey);
 
-	// b
+	HashedEntry<KeyType, ItemType> *newEntry = new HashedEntry<KeyType, ItemType>(newItem, searchKey);
+	HashedEntry<KeyType, ItemType> *curPtr = hashTable[itemHashIndex];
+	HashedEntry<KeyType, ItemType> *prevPtr = nullptr;
+	HashedEntry<KeyType, ItemType> *targetPtr = hashTable[itemHashIndex];
 
-	if (!itemPtr)
+	if (!hashTable[itemHashIndex])
 	{
-		HashedEntry<KeyType, ItemType> *newEntry = new HashedEntry<KeyType, ItemType>(newItem, searchKey);
+		hashTable[itemHashIndex] = newEntry;
+		return;
+	}
 
-		if (hashTable[itemHashIndex] == nullptr)
-			hashTable[itemHashIndex] = newEntry;
-		else
+	if (itemPtr)
+	{
+		while (curPtr)
 		{
-			newEntry->setNext(hashTable[itemHashIndex]);
-			hashTable[itemHashIndex] = newEntry;
+			if (curPtr == itemPtr)
+			{
+				delete newEntry;
+
+				newEntry = new HashedEntry<KeyType, ItemType>(curPtr->getItem(), curPtr->getKey());
+				newEntry->setCount(curPtr->getCount());
+				newEntry->countUp();
+
+				if (curPtr == hashTable[itemHashIndex])
+					hashTable[itemHashIndex] = curPtr->getNext();
+				else
+					prevPtr->setNext(curPtr->getNext());
+
+				delete curPtr;
+
+				curPtr = hashTable[itemHashIndex];
+				targetPtr = hashTable[itemHashIndex];
+				break;
+			}
+			prevPtr = curPtr;
+			curPtr = curPtr->getNext();
 		}
 	}
-	else
-		itemPtr->countUp();
 
+	while (curPtr)
+	{
+		if (newEntry->getCount() < targetPtr->getCount())
+		{
+			prevPtr = targetPtr;
+			targetPtr = targetPtr->getNext();
+		}
+		else if (newEntry->getCount() == targetPtr->getCount())
+		{
+			if (newEntry->getItem().size() < targetPtr->getItem().size())
+			{
+				prevPtr = targetPtr;
+				targetPtr = targetPtr->getNext();
+			}
+			else if (newEntry->getItem().size() == targetPtr->getItem().size())
+			{
+				if (newEntry->getItem() < targetPtr->getItem())
+				{
+					prevPtr = targetPtr;
+					targetPtr = targetPtr->getNext();
+				}
+			}
+		}
+		curPtr = curPtr->getNext();
+	}
+
+	if (targetPtr == hashTable[itemHashIndex])
+	{
+		newEntry->setNext(targetPtr);
+		hashTable[itemHashIndex] = newEntry;
+	}
+	else
+	{
+		prevPtr->setNext(newEntry);
+		newEntry->setNext(targetPtr);
+	}
 } // end add
 
 template <class KeyType, class ItemType>
@@ -148,34 +206,76 @@ bool HashedDictionary<KeyType, ItemType>::remove(const KeyType &searchKey) //* a
 	// Compute the hashed index into the array
 	int itemHashIndex = getHashIndex(searchKey);
 
-	// e
+	HashedEntry<KeyType, ItemType> *curPtr = hashTable[itemHashIndex];
+	HashedEntry<KeyType, ItemType> *newEntry = nullptr;
+	HashedEntry<KeyType, ItemType> *prevPtr = nullptr;
+	HashedEntry<KeyType, ItemType> *targetPtr = nullptr;
 
 	if (itemPtr)
 	{
-		HashedEntry<KeyType, ItemType> *curPtr = hashTable[itemHashIndex];
-		HashedEntry<KeyType, ItemType> *prevPtr = nullptr;
-
 		while (curPtr)
 		{
-			if (curPtr->getItem() == itemPtr->getItem())
+			if (curPtr == itemPtr)
 			{
-				if (itemPtr->getCount() == 1)
-				{
-					if (curPtr == hashTable[itemHashIndex])
-						hashTable[itemHashIndex] = curPtr->getNext();
-					else
-						prevPtr->setNext(curPtr->getNext());
+				newEntry = new HashedEntry<KeyType, ItemType>(curPtr->getItem(), curPtr->getKey());
+				newEntry->setCount(curPtr->getCount());
+				newEntry->countDown();
 
-					delete curPtr;
-				}
+				if (curPtr == hashTable[itemHashIndex])
+					hashTable[itemHashIndex] = curPtr->getNext();
 				else
-					itemPtr->countDown();
+					prevPtr->setNext(curPtr->getNext());
 
+				delete curPtr;
+
+				curPtr = hashTable[itemHashIndex];
+				targetPtr = hashTable[itemHashIndex];
 				break;
 			}
-
 			prevPtr = curPtr;
 			curPtr = curPtr->getNext();
+		}
+
+		if (newEntry->getCount() == 0)
+			delete newEntry;
+		else
+		{
+			while (curPtr)
+			{
+				if (newEntry->getCount() < targetPtr->getCount())
+				{
+					prevPtr = targetPtr;
+					targetPtr = targetPtr->getNext();
+				}
+				else if (newEntry->getCount() == targetPtr->getCount())
+				{
+					if (newEntry->getItem().size() < targetPtr->getItem().size())
+					{
+						prevPtr = targetPtr;
+						targetPtr = targetPtr->getNext();
+					}
+					else if (newEntry->getItem().size() == targetPtr->getItem().size())
+					{
+						if (newEntry->getItem() < targetPtr->getItem())
+						{
+							prevPtr = targetPtr;
+							targetPtr = targetPtr->getNext();
+						}
+					}
+				}
+				curPtr = curPtr->getNext();
+			}
+
+			if (targetPtr == hashTable[itemHashIndex])
+			{
+				newEntry->setNext(targetPtr);
+				hashTable[itemHashIndex] = newEntry;
+			}
+			else
+			{
+				prevPtr->setNext(newEntry);
+				newEntry->setNext(targetPtr);
+			}
 		}
 
 		itemFound = true;

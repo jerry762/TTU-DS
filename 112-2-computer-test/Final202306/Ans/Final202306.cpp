@@ -60,44 +60,50 @@ void stringToTokens(queue<string> &aQueue, string aString)
 
 bool pqArrayAdd(BinaryNode<string> *pqArray, int &size, const string word) //* add your code here
 {
-	if (size == 0)
+	bool find = false;
+	int i = 0;
+
+	for (; i < size; i++)
+	{
+		if (pqArray[i].getItem() == word)
+		{
+			find = true;
+			pqArray[i].countUp();
+			break;
+		}
+	}
+
+	if (!find)
 	{
 		pqArray[size].setItem(word);
 		pqArray[size].setCount(1);
 		size++;
-
-		return true;
 	}
-	else
-	{
-		bool find = false;
 
-		for (size_t i = 0; i < size; i++)
+	for (int j = i - 1; j >= 0; j--)
+	{
+		if (pqArray[i].getCount() > pqArray[j].getCount())
 		{
-			if (pqArray[i].getItem() == word)
+			swap(pqArray[i], pqArray[j]);
+			i = j;
+		}
+		else if (pqArray[i].getCount() == pqArray[j].getCount())
+		{
+			if (pqArray[i].getItem().size() > pqArray[j].getItem().size())
 			{
-				pqArray[i].countUp();
-				find = true;
-				break;
+				swap(pqArray[i], pqArray[j]);
+				i = j;
+			}
+			else if (pqArray[i].getItem().size() == pqArray[j].getItem().size())
+			{
+				if (pqArray[i].getItem() > pqArray[j].getItem())
+				{
+					swap(pqArray[i], pqArray[j]);
+					i = j;
+				}
 			}
 		}
-
-		if (!find)
-		{
-			pqArray[size].setItem(word);
-			pqArray[size].setCount(1);
-			size++;
-		}
 	}
-
-	sort(pqArray, pqArray + size, [](const BinaryNode<string> &a, const BinaryNode<string> &b) -> bool
-		 { return a.getItem() > b.getItem(); });
-
-	sort(pqArray, pqArray + size, [](const BinaryNode<string> &a, const BinaryNode<string> &b) -> bool
-		 { return a.getItem().length() > b.getItem().length(); });
-
-	sort(pqArray, pqArray + size, [](const BinaryNode<string> &a, const BinaryNode<string> &b) -> bool
-		 { return a.getCount() > b.getCount(); });
 
 	return true;
 }
@@ -106,29 +112,47 @@ bool pqArrayRemove(BinaryNode<string> *pqArray, int &size) //* add your code her
 {
 	if (size == 0)
 		return false;
-	else
+	else if (size == 1)
 	{
 		if (pqArray[0].getCount() == 1)
-		{
-			for (size_t i = 0; i < size - 1; i++)
-				pqArray[i] = pqArray[i + 1];
-
 			size--;
-			pqArray[size].setItem("");
-			pqArray[size].setCount(0);
-		}
 		else
 			pqArray[0].countDown();
 	}
+	else
+	{
+		int i = 0;
 
-	sort(pqArray, pqArray + size, [](const BinaryNode<string> &a, const BinaryNode<string> &b) -> bool
-		 { return a.getItem() > b.getItem(); });
+		pqArray[0].countDown();
 
-	sort(pqArray, pqArray + size, [](const BinaryNode<string> &a, const BinaryNode<string> &b) -> bool
-		 { return a.getItem().length() > b.getItem().length(); });
+		for (int j = i + 1; j < size; j++)
+		{
+			if (pqArray[i].getCount() < pqArray[j].getCount())
+			{
+				swap(pqArray[i], pqArray[j]);
+				i = j;
+			}
+			else if (pqArray[i].getCount() == pqArray[j].getCount())
+			{
+				if (pqArray[i].getItem().size() < pqArray[j].getItem().size())
+				{
+					swap(pqArray[i], pqArray[j]);
+					i = j;
+				}
+				else if (pqArray[i].getItem().size() == pqArray[j].getItem().size())
+				{
+					if (pqArray[i].getItem() < pqArray[j].getItem())
+					{
+						swap(pqArray[i], pqArray[j]);
+						i = j;
+					}
+				}
+			}
+		}
 
-	sort(pqArray, pqArray + size, [](const BinaryNode<string> &a, const BinaryNode<string> &b) -> bool
-		 { return a.getCount() > b.getCount(); });
+		if (pqArray[i].getCount() == 0)
+			size--;
+	}
 
 	return true;
 }
