@@ -1,0 +1,119 @@
+================ Q1 ==================
+
+9 2 4 1 5 8 3 0 //origin
+
+8 6 2 4 4 6 2 0
+
+1 3 7 7 3 1 5 0
+
+6 3 5 8 9 1 4 7 7 2
+
+================ Q2 ==================
+
+**************************************************************************************************
+* updateArrayBasedTerm and updateLinkBasedTerm should be tested together. (could be duplicated)  *
+*                                                                                                *
+* swapArrayBasedTerms and swapLinkBasedTerms should be tested together. (should be distinguish)  *
+*                                                                                                *
+* 如果一起測，則會出現重複之terms，此時swapArrayBasedTerms and swapLinkBasedTerms                    *
+* 會不知選擇哪個terms交換，答案會不唯一。                                                            *
+**************************************************************************************************
+
+EX:
+
+COMMENT THIS
+
+aArrPoly.updateArrayBasedTerm(coef, expo); 
+aLinkPol.updateLinkBasedTerm(coef, expo);  
+
+OR
+
+aArrPoly.swapArrayBasedTerms(expo, coef); 
+aLinkPol.swapLinkBasedTerms(expo, coef);  
+
+IN Midterm202311.cpp
+
+---------------------------------------------------
+
+1. (for isIncreasingOrder)
+
+// Array Based
+
+1 1 2 1 3 1 4 1 5 1 6 1 7 1 8 1 9 1 0 0
+
+1 1 2 2 3 3 4 4 5 5 6 6 7 7 8 8 0 0
+
+1 1 2 2 3 3 4 4 5 5 1 5 6 6 0 0
+
+1 0 7 3 2 5 4 6 8 7 3 9 10 22 4 77 6 100 999 1000
+
+// Linked Based
+
+9 1 8 1 7 1 6 1 5 1 4 1 3 1 2 1 1 1 0 0
+
+8 8 7 7 6 6 5 5 4 4 3 3 2 2 1 1 0 0
+
+6 6 1 5 5 5 4 4 3 3 2 2 1 1 0 0
+
+999 1000 6 100 4 77 10 22 3 9 8 7 4 6 2 5 7 3 1 0
+
+2. (for updateArrayBasedTerm and updateLinkBasedTerm)
+
+-2 2 -1 1 3 1 4 2 5 0 0 0 //origin
+1 2
+0 1
+2 1
+
+8 8 7 7 6 6 5 5 4 4 3 3 2 2 1 1 0 0
+9 5
+0 5
+7 10
+
+6 6 1 5 5 5 4 4 3 3 7 3 2 2 1 1 0 0
+0 5
+0 4
+0 3
+
+1 1 2 1 3 1 4 1 5 1 6 1 7 1 8 1 9 1 0 0
+0 1
+9 9
+0 9
+
+1 1 2 1 3 1 4 1 5 1 6 1 7 1 8 1 9 1 0 0
+1 1
+0 1
+1 1
+
+3. (for swapArrayBasedTerms and swapLinkBasedTerms)
+
+5 0 -15 1 2 2 -1 3 0 0 //origin
+0 3
+2 1
+4 1
+
+1 1 2 2 3 3 4 4 5 5 6 6 7 7 0 0
+1 7
+2 6
+3 5
+
+999 1000 6 100 4 77 10 22 3 9 8 7 4 6 2 5 7 3 1 0
+0 0
+4 8
+23 999
+
+2 4 5 9 1 3 4 7 7 2 3 10 0 0
+2 4
+9 3
+4 9
+
+================ Q3 ==================
+
+string items[] = { "5E", "1A", "5E", "3C", "5E", "3C", "5E", "3C", "2B", "5E" }; //origin
+
+string items[] = { "5E", "3C", "5E", "3C", "5E", "3C", "3C", "5E", "5E", "3C" };
+
+string items[] = { "1A", "3C", "3C", "3C", "5E", "5E", "5E", "4D", "4D", "4D" };
+
+string items[] = { "1A", "3C", "7Q", "3C", "8M", "5E", "5E", "4D", "4D", "6U" };
+
+string items[] = { "5E", "5E", "5E", "5E", "5E", "5E", "5E", "5E", "5E", "5E" };
