@@ -60,6 +60,12 @@ void stringToTokens(queue<string> &aQueue, string aString)
 
 bool pqArrayAdd(BinaryNode<string> *pqArray, int &size, const string word) //* add your code here
 {
+	if (size == PQSIZE)
+	{
+		cout << "ARRAY Priority queue full!" << endl;
+		return false;
+	}
+
 	bool find = false;
 	int i = 0;
 
@@ -112,13 +118,6 @@ bool pqArrayRemove(BinaryNode<string> *pqArray, int &size) //* add your code her
 {
 	if (size == 0)
 		return false;
-	else if (size == 1)
-	{
-		if (pqArray[0].getCount() == 1)
-			size--;
-		else
-			pqArray[0].countDown();
-	}
 	else
 	{
 		int i = 0;
