@@ -75,32 +75,24 @@ void DFS_Iter(int **matrixGraph, int numVertices, int vertexNo, bool *visited, v
 
 	stack.push(vertexNo);
 
-	visited[vertexNo] = true;
-	cout << " v" << vertexNo;
-
 	while (!stack.empty())
 	{
-		bool find = false;
+		int top = stack.top();
+		stack.pop();
 
-		for (size_t i = 0; i < numVertices; i++)
+		if (!visited[top])
 		{
-			if (matrixGraph[vertexNo][i] < INT_MAX && !visited[i])
-			{
-				parents[i] = vertexNo;
-				vertexNo = i;
-				stack.push(vertexNo);
-				visited[vertexNo] = true;
-				cout << " v" << vertexNo;
-				find = true;
-				break;
-			}
+			cout << " v" << top;
+			visited[top] = true;
 		}
 
-		if (!find)
+		for (int i = numVertices - 1; i >= 0; i--)
 		{
-			stack.pop();
-			if (!stack.empty())
-				vertexNo = stack.top();
+			if (matrixGraph[top][i] != INT_MAX && !visited[i])
+			{
+				parents[i] = top;
+				stack.push(i);
+			}
 		}
 	}
 }
