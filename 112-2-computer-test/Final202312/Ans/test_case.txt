@@ -1,0 +1,68 @@
+================ Q1 ==================
+
+A aaa bbb ccc aaa bbb aaa ccc ccc bbb aa a bb c cc aa b bb cc d
+
+R c R a R ccc R cc R bbb R ccc R bbb R aa R aaa R aaa R d R cc R bbb R ccc R bb R bb R b R aa R x R aaa R
+
+================ Q2 ==================
+
+C
+
+D 0 D 1 D 2 D 3 D 4 D 5 D 6 D 7 D 8 
+
+================ Q3 ==================
+
+A 2
+
+L 6 L 2
+
+N
+
+C
+
+-----------------------------
+
+A 6 9 8 3 5
+
+L 6 L 1 L 8 L 9 L 5
+
+N
+
+C
+
+-----------------------------
+
+A 5 3 7 1 6 4 9
+
+L 1 L 5 L 3 L 9 L 6 L 7 L 0
+
+N
+
+A 0
+
+L 1 L 0
+
+N
+
+A 2
+
+L 2
+
+N
+
+C
+
+================ Q4 ==================
+
+A a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z
+
+R n R c R c R y R y R n R n R u R u R j R j R j R m R m R b R x R x R b
+
+C
+-----------------------------
+
+A bbb mmm xxx mm mm x xx bb bb xx mmm xxx mmm b bbb bbb xxx m
+
+R xxx R xxx R x R b R mm R bbb R bbb R xx R mmm R mmm R xxx R m R bb R bbb R xxx R mmm R xx R bb R mm R mm
+
+C
