@@ -81,8 +81,8 @@ bool pqArrayAdd(BinaryNode<string> *pqArray, int &size, const string word) //* a
 
 	if (!find)
 	{
-		pqArray[size].setItem(word);
-		pqArray[size].setCount(1);
+		pqArray[i].setItem(word);
+		pqArray[i].setCount(1);
 		size++;
 	}
 
