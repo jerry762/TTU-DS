@@ -178,7 +178,7 @@ bool checkCycle(int parent[], int u, int v) //* add your code here
 		if (u_origin == v_origin)
 			cycle = true;
 		else
-			parent[v] = u;
+			parent[v_origin] = u_origin;
 	}
 
 	return cycle;
