@@ -160,12 +160,28 @@ vector<int> doBFS(int **matrixGraph, int numVertices, int vertexNo) //* add your
 
 bool checkCycle(int parent[], int u, int v) //* add your code here
 {
+	bool cycle = false;
+
 	if (parent[v] == -1)
-	{
 		parent[v] = u;
-		return false;
+	else
+	{
+		int u_origin = u;
+		int v_origin = v;
+
+		while (parent[u_origin] != -1)
+			u_origin = parent[u_origin];
+
+		while (parent[v_origin] != -1)
+			v_origin = parent[v_origin];
+
+		if (u_origin == v_origin)
+			cycle = true;
+		else
+			parent[v] = u;
 	}
-	return true;
+
+	return cycle;
 }
 
 bool doCheckCycles(int **matrixGraph, int numVertices)
