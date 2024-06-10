@@ -97,8 +97,8 @@ bool ArrayBag<ItemType>::removeDuplicate()
         {
             if (items[i] == items[j])
             {
-                for (size_t k = 0; k < itemCount - j - 1; k++)
-                    items[j + k] = items[j + k + 1];
+                for (size_t k = j; k < itemCount - 1; k++)
+                    items[j] = items[j + 1];
 
                 itemCount--;
                 j--;
