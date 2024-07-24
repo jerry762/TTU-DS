@@ -1,0 +1,82 @@
+DS-Final202406:
+
+================ Q1 ==================
+
+A 1 2 3 4 5 6 7 8 9 10 11 1 2 3 4 5 6 7 8 9 10 11 6
+R 6 R 6 R 6
+A 6 3
+R 6 R 1 R 1 R 3
+R 2 R 3 R 4 R 5 R 7 R 8 R 9 R 10 R 2 R 3 R 7 R 8 R 10 R 9
+A 4 5 6
+R 4 R 4 R 5 R 5 R 6 R
+A 1 2 3 4 5 6 7 8 9 10
+X
+
+================ Q2 ==================
+
+B 2
+B 1
+B 6
+B 7
+
+R
+B 2
+B 1
+
+R
+B 2
+B 1
+
+R
+B 1
+B 2
+B 3
+B 4
+B 5
+B 6
+B 7
+X
+
+================ Q3 ==================
+
+A 6 5 4 3 2 1
+
+L 1 L 3 L 6
+
+N
+
+C
+
+-----------------------------
+
+
+A 5 3 1 7 4 8 9 6
+
+L 5 L 3 L 1 L 8 L 9 L 6
+
+N
+
+C
+
+X
+
+================ Q4 ==================
+
+A a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a
+
+R a R a R a R w R w R l R l R o R o
+
+A l A o A o
+
+C
+-----------------------------
+
+A bbb mmm xxx mm mm x xx bb bb xx mmm xxx mmm b bbb bbb xxx m
+
+R xxx R xxx R x R b R mm R bbb R bbb R xx R mmm R mmm R xxx R m R bb R bbb R xxx R mmm R xx R bb R mm R mm
+
+A a aa aaa
+
+C
+
+X
